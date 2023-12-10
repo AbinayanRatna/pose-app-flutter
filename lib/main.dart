@@ -3,7 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pose_detection_app/views/pose_detection_view.dart';
 import 'package:toast/toast.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pose_detection_app/models/pose_one_model.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -153,14 +157,30 @@ class CustomerFragment extends StatelessWidget {
   }
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({super.key});
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create:(context)=>PoseDetector(),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: MyApp2()
+      ),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp2 extends StatefulWidget {
+  MyApp2({super.key});
+
+  @override
+  State<MyApp2> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp2> {
   int currentIndex = 0;
   bool buttonPressedCustomer = true;
   bool buttonPressedAdmin = false;
@@ -172,9 +192,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: Scaffold(
+          return  Scaffold(
               backgroundColor: const Color.fromRGBO(16, 36, 85, 1.0),
               body: Column(
                 children: [
@@ -319,8 +337,7 @@ class _MyAppState extends State<MyApp> {
                   )
                 ],
               ),
-            ),
-          );
+            );
         });
   }
 }
@@ -467,6 +484,10 @@ class PoseListPage extends StatelessWidget {
           InkWell(
             onTap: () {
               print("1st options");
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => PoseDetectorView()),
+              );
             },
             child: Container(
                 decoration: BoxDecoration(
