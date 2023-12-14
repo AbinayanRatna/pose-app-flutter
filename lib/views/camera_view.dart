@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart' as model;
@@ -147,83 +148,79 @@ class _CameraViewState extends State<CameraView> {
     if (_cameras.isEmpty) return Container();
     if (_controller == null) return Container();
     if (_controller?.value.isInitialized == false) return Container();
-    return Container(
-      color: Colors.black,
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Center(
-            child: _changingCameraLens
-                ? Center(
-                    child: const Text('Changing camera lens'),
-                  )
-                : CameraPreview(
-                    _controller!,
-                    child: widget.customPaint,
-                  ),
-          ),
-          _counterWidget(),
-          _backButton(),
-          _takePicture(),
-          _switchLiveCameraToggle(),
-          _zoomControl(),
-          _exposureControl(),
-        ],
+    return ScreenUtilInit(
+      minTextAdapt: true,
+      child: Container(
+        color: Colors.black,
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Center(
+              child: _changingCameraLens
+                  ? Center(
+                      child: const Text('Changing camera lens'),
+                    )
+                  : CameraPreview(
+                      _controller!,
+                      child: widget.customPaint,
+                    ),
+            ),
+            _resultsWidget(),
+            _takePicture(),
+            _switchLiveCameraToggle(),
+            _zoomControl(),
+            _exposureControl(),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _counterWidget() {
+  Widget _resultsWidget() {
     final bloc = BlocProvider.of<model.PoseDetector>(context);
     String poseText = '';
-
+    bool isPoseCorrect = false;
     // Determine the text to display based on the pose state
     switch (bloc.state) {
       case model.PoseState.correct:
         poseText = 'Correct Pose';
+        isPoseCorrect = true;
         break;
       case model.PoseState.incorrect:
         poseText = 'Incorrect Pose';
+        isPoseCorrect = false;
         break;
       case model.PoseState.neutral:
-        poseText = 'Neutral Pose';
+        poseText = 'Incorrect Pose';
         break;
       // Add other cases if needed for different states
     }
 
     return Positioned(
       left: 0,
-      top: 50,
+      top: 80.w,
       right: 0,
       child: Container(
-        width: 70,
+        width: 80.w,
         child: Column(
           children: [
-            Text(
-              'Pose',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
-            ),
             Container(
-              width: 70,
+              width: 100.w,
               decoration: BoxDecoration(
                 color: Colors.black54,
                 border: Border.all(
                   color: Colors.white.withOpacity(0.4),
-                  width: 4.0,
+                  width: 4.0.w,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Text(
                 poseText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: isPoseCorrect ? Colors.white : Colors.red,
                   fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                  fontSize: 14.w,
                 ),
               ),
             ),
@@ -233,6 +230,7 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
+  /*
   Widget _backButton() => Positioned(
         top: 40,
         left: 8,
@@ -254,30 +252,31 @@ class _CameraViewState extends State<CameraView> {
         ),
       );
 
+   */
   Widget _takePicture() => Positioned(
-        bottom: 8,
-        left: 8,
+        bottom: 10.w,
+        left: MediaQuery.of(context).size.width / 2.w,
         child: SizedBox(
-          height: 50.0,
-          width: 50.0,
+          height: 50.0.w,
+          width: 50.0.w,
           child: FloatingActionButton(
             heroTag: Object(),
             onPressed: takePicture,
             backgroundColor: Colors.black54,
             child: Icon(
               Icons.camera,
-              size: 25,
+              size: 35.w,
             ),
           ),
         ),
       );
 
   Widget _switchLiveCameraToggle() => Positioned(
-        bottom: 8,
-        right: 8,
+        bottom: 10.w,
+        right: 30.w,
         child: SizedBox(
-          height: 50.0,
-          width: 50.0,
+          height: 50.0.w,
+          width: 50.0.w,
           child: FloatingActionButton(
             heroTag: Object(),
             onPressed: _switchLiveCamera,
@@ -286,20 +285,20 @@ class _CameraViewState extends State<CameraView> {
               Platform.isIOS
                   ? Icons.flip_camera_ios_outlined
                   : Icons.flip_camera_android_outlined,
-              size: 25,
+              size: 35.w,
             ),
           ),
         ),
       );
 
   Widget _zoomControl() => Positioned(
-        bottom: 16,
+        bottom: 90.w,
         left: 0,
         right: 0,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
-            width: 250,
+            width: 250.w,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -320,13 +319,13 @@ class _CameraViewState extends State<CameraView> {
                   ),
                 ),
                 Container(
-                  width: 50,
+                  width: 50.w,
                   decoration: BoxDecoration(
                     color: Colors.black54,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0.w),
                     child: Center(
                       child: Text(
                         '${_currentZoomLevel.toStringAsFixed(1)}x',
@@ -359,7 +358,7 @@ class _CameraViewState extends State<CameraView> {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
-                    '${_currentExposureOffset.toStringAsFixed(1)}x',
+                    "${_currentExposureOffset.toStringAsFixed(1)}x",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -553,12 +552,17 @@ class PreviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Preview Page')),
       body: Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Image.file(File(picture.path), fit: BoxFit.cover, width: 250),
-          const SizedBox(height: 24),
-          Text(picture.name)
+        child: Column(children: [
+          Padding(
+            padding: EdgeInsets.only(top: 50.w),
+            child: Image.file(File(picture.path),
+                fit: BoxFit.cover, width: MediaQuery.of(context).size.width),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20.w, right: 20.w, left: 20.w),
+            child: const Text("Image successfully saved to gallery"),
+          )
         ]),
       ),
     );

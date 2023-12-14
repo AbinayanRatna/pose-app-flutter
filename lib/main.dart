@@ -1,5 +1,5 @@
+import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:bouncing_button/bouncing_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -177,7 +177,7 @@ class _MyAppState extends State<MyApp2> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  CupertinoPageRoute(
+                                  MaterialPageRoute(
                                       builder: (context) => GuestPageHome()),
                                 );
                               },
@@ -288,179 +288,185 @@ class PoseListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+        appBar: AppBar(
+          title: const Text("Select a pose"),
+          backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+        ),
         body: Container(
-      padding: EdgeInsets.only(top: 20.w, bottom: 10.w, left: 0, right: 0),
-      child: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 20.w, mainAxisSpacing: 20.w),
-        children: [
-          InkWell(
-            onTap: () {
-              print("1st options");
-              Navigator.push(
-                context,
-                CupertinoPageRoute(builder: (context) => PoseDetectorView()),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.indigo,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20.w),
-                  topLeft: Radius.circular(20.w),
-                  bottomRight: Radius.circular(20.w),
-                  bottomLeft: Radius.circular(20.w),
+          padding: EdgeInsets.only(top: 20.w, bottom: 10.w, left: 0, right: 0),
+          child: GridView(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 20.w,
+                mainAxisSpacing: 20.w),
+            children: [
+              InkWell(
+                onTap: () {
+                  print("1st options");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PoseDetectorView()),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.indigo,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.w),
+                      topLeft: Radius.circular(20.w),
+                      bottomRight: Radius.circular(20.w),
+                      bottomLeft: Radius.circular(20.w),
+                    ),
+                  ),
+                  margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                  child: const Center(
+                    child: Text("first pose"),
+                  ),
                 ),
               ),
-              margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-              child: const Center(
-                child: Text("first pose"),
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              print("2nd options");
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20.w),
-                  topLeft: Radius.circular(20.w),
-                  bottomRight: Radius.circular(20.w),
-                  bottomLeft: Radius.circular(20.w),
+              InkWell(
+                onTap: () {
+                  print("2nd options");
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.w),
+                      topLeft: Radius.circular(20.w),
+                      bottomRight: Radius.circular(20.w),
+                      bottomLeft: Radius.circular(20.w),
+                    ),
+                  ),
+                  margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                  child: const Center(
+                    child: Text("second pose"),
+                  ),
                 ),
               ),
-              margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-              child: const Center(
-                child: Text("second pose"),
+              InkWell(
+                onTap: () {
+                  print("3rd options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.deepOrangeAccent,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                    child: const Center(child: Text("third pose"))),
               ),
-            ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.indigoAccent,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                    child: const Center(child: Text("fourth pose"))),
+              ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                    child: const Center(child: Text("fifth pose"))),
+              ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.deepPurple,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                    child: const Center(child: Text("sixth pose"))),
+              ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.brown,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                    child: const Center(child: Text("seventh pose"))),
+              ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.deepOrange,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                    child: const Center(child: Text("eighth pose"))),
+              ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.deepPurple,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 20.w),
+                    child: const Center(child: Text("ninth pose"))),
+              ),
+              InkWell(
+                onTap: () {
+                  print("4th options");
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.indigoAccent,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.w),
+                            topLeft: Radius.circular(20.w),
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(20.w))),
+                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 20.w),
+                    child: const Center(child: Text("tenth pose"))),
+              ),
+            ],
           ),
-          InkWell(
-            onTap: () {
-              print("3rd options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.deepOrangeAccent,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                child: const Center(child: Text("third pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.indigoAccent,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                child: const Center(child: Text("fourth pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                child: const Center(child: Text("fifth pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.deepPurple,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                child: const Center(child: Text("sixth pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.brown,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                child: const Center(child: Text("seventh pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                child: const Center(child: Text("eighth pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.deepPurple,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(20.w, 0, 0, 20.w),
-                child: const Center(child: Text("ninth pose"))),
-          ),
-          InkWell(
-            onTap: () {
-              print("4th options");
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.indigoAccent,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.w),
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        bottomLeft: Radius.circular(20.w))),
-                margin: EdgeInsets.fromLTRB(0, 0, 20.w, 20.w),
-                child: const Center(child: Text("tenth pose"))),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -720,8 +726,7 @@ class GuestPageHome extends StatelessWidget {
                         print("1st Options: Poses");
                         Navigator.push(
                           context,
-                          CupertinoPageRoute(
-                              builder: (context) => PoseListPage()),
+                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 0)),
                         );
                       },
                       child: Container(
@@ -753,6 +758,10 @@ class GuestPageHome extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         print("2nd options:profile ");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 2)),
+                        );
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -783,6 +792,10 @@ class GuestPageHome extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         print("3rd options: Settings");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
+                        );
                       },
                       child: Container(
                           decoration: BoxDecoration(
@@ -814,6 +827,10 @@ class GuestPageHome extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         print("4th options: About this app");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 3)),
+                        );
                       },
                       child: Container(
                           decoration: BoxDecoration(
@@ -853,24 +870,155 @@ class GuestPageHome extends StatelessWidget {
   }
 }
 
-class InstructionPage extends StatelessWidget {
-  const InstructionPage({super.key});
+class NavBarPage extends StatefulWidget {
+  final int currentTab;
+
+  NavBarPage({Key? key, this.currentTab = 0}) : super(key: key);
+
+  @override
+  State<NavBarPage> createState() => _NavBarPageState();
+}
+
+
+class _NavBarPageState extends State<NavBarPage> {
+  late final PageController _pageController;
+  late final NotchBottomBarController _controller;
+
+  int maxCount = 4;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    _pageController = PageController(initialPage: widget.currentTab);
+    _controller = NotchBottomBarController(index: widget.currentTab);
+
+  }
+  /// widget list
+  final List<Widget> bottomBarPages = [
+    const PoseListPage(),
+    const SettingPage(),
+    const ProfilePage(),
+    const AboutUs(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: ()async =>false,
-      child: Scaffold(
-        body: GestureDetector(
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PoseDetectorView()));
-          },
-          child: Container(
-            color: Colors.red,
-          ),
-        ),
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: List.generate(
+            bottomBarPages.length, (index) => bottomBarPages[index]),
       ),
+      extendBody: true,
+      bottomNavigationBar: (bottomBarPages.length <= maxCount)
+          ? AnimatedNotchBottomBar(
+              /// Provide NotchBottomBarController
+              notchBottomBarController: _controller,
+              color: const Color.fromRGBO(19, 154, 157, 1.0),
+              showLabel: false,
+              notchColor: const Color.fromRGBO(0, 0, 0, 1.0),
+
+              /// restart app if you change removeMargins
+              removeMargins: false,
+              bottomBarWidth: MediaQuery.of(context).size.width,
+              durationInMilliSeconds: 300,
+              bottomBarItems: const [
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.accessibility_new,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.accessibility_new,
+                    color: const Color.fromRGBO(19, 154, 157, 1.0),
+                  ),
+                  itemLabel: 'Person',
+                ),
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.settings,
+                    color: const Color.fromRGBO(19, 154, 157, 1.0),
+                  ),
+                  itemLabel: 'Settings',
+                ),
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.person,
+                    color: const Color.fromRGBO(19, 154, 157, 1.0),
+                  ),
+                  itemLabel: 'Page 5',
+                ),
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.add_call,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.add_call,
+                    color: const Color.fromRGBO(19, 154, 157, 1.0),
+                  ),
+                  itemLabel: 'Page 5',
+                ),
+              ],
+              onTap: (index) {
+                /// perform action on tab change and to update pages you can update pages without pages
+                _pageController.jumpToPage(index);
+              },
+            )
+          : null,
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: const Text("Profile"),backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),),
+    body:Container(
+        color: Colors.green, child: const Center(child: Text('Profile Page'))));
+  }
+}
+
+class SettingPage extends StatelessWidget {
+  const SettingPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: const Text("Settings"),backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),),
+    body:Container(
+        color: Colors.red, child: const Center(child: Text('Setting Page'))));
+  }
+}
+
+class AboutUs extends StatelessWidget {
+  const AboutUs({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("About us"),backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),),
+      body: Container(
+          color: Colors.blue, child: const Center(child: Text('About Us'))),
     );
   }
 }
