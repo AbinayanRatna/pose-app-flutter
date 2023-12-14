@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart';
 import 'package:pose_detection_app/views/pose_detection_view.dart';
-import 'package:toast/toast.dart';
 
 void main() {
   runApp(MyApp());
@@ -91,66 +90,6 @@ class AdminFragment extends StatelessWidget {
                 ),
               )
             ]),
-      ),
-    );
-  }
-}
-
-class CustomerFragment extends StatelessWidget {
-  const CustomerFragment({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    ToastContext().init(context);
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 30.w, bottom: 20.w),
-                  child: Text(
-                    "Hey ! ",
-                    style: TextStyle(
-                      color: const Color.fromRGBO(16, 36, 85, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.w,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 35.w, bottom: 20.w),
-                  child: Text(
-                    "Capture now",
-                    style: TextStyle(
-                      color: const Color.fromRGBO(16, 36, 85, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.w,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            CupertinoButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => GuestPageOne()),
-                );
-              },
-              child: SvgPicture.asset(
-                "assets/circled_right.svg",
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.height / 4,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -339,131 +278,6 @@ class _MyAppState extends State<MyApp2> {
             ),
           );
         });
-  }
-}
-
-class GuestPageOne extends StatelessWidget {
-  const GuestPageOne({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      minTextAdapt: true,
-      child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-                flex: 6,
-                child: Container(
-                  decoration: BoxDecoration(color: Colors.deepPurple),
-                )),
-            Expanded(
-              flex: 9,
-              child: Container(
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 30.w, top: 10.w, right: 0, bottom: 10.w),
-                        child: Text(
-                          "Select an option",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30.w,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height / (1.5.h),
-                      child: GridView(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                MediaQuery.of(context).size.width < 700 ? 2 : 4,
-                            mainAxisSpacing: 20.w,
-                            crossAxisSpacing: 20.w),
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              print("1st Options: Poses");
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => PoseListPage()),
-                              );
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.indigo,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(20.w),
-                                        topLeft: Radius.circular(20.w),
-                                        bottomRight: Radius.circular(20.w),
-                                        bottomLeft: Radius.circular(20.w))),
-                                margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                                child: const Center(child: Text("Poses"))),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              print("2nd options:profile ");
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(20.w),
-                                        topLeft: Radius.circular(20.w),
-                                        bottomRight: Radius.circular(20.w),
-                                        bottomLeft: Radius.circular(20.w))),
-                                margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                                child: const Center(child: Text("Profile"))),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              print("3rd options: Settings");
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.deepOrangeAccent,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(20.w),
-                                        topLeft: Radius.circular(20.w),
-                                        bottomRight: Radius.circular(20.w),
-                                        bottomLeft: Radius.circular(20.w))),
-                                margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                                child: const Center(child: Text("Settings"))),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              print("4th options: About this app");
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.deepPurple,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(20.w),
-                                      topLeft: Radius.circular(20.w),
-                                      bottomRight: Radius.circular(20.w),
-                                      bottomLeft: Radius.circular(20.w))),
-                              margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                              child: const Center(
-                                child: Text("Read me"),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -817,11 +631,6 @@ class GuestPageHome extends StatelessWidget {
     "ad2",
     "ad3",
     "ad4",
-    "ad5",
-    "ad6",
-    "ad7",
-    "ad8",
-    "ad9"
   ];
 
   @override
@@ -840,7 +649,7 @@ class GuestPageHome extends StatelessWidget {
                   color: const Color.fromRGBO(255, 255, 255, 1.0),
                   borderRadius: BorderRadius.only(
                     //bottomLeft: Radius.circular(20.w),
-                    bottomRight: Radius.circular(40.w),
+                    bottomRight: Radius.circular(90.w),
                   ),
                 ),
                 child: Column(
@@ -877,7 +686,7 @@ class GuestPageHome extends StatelessWidget {
                                       child: Text(
                                     numbers[index].toString(),
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 36.0),
+                                        color: Colors.white, fontSize: 36.w),
                                   )),
                                 ),
                               ),
@@ -917,7 +726,7 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(149, 162, 162, 1.0),
+                            color: Color.fromRGBO(188, 197, 197, 1.0),
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20.w),
                                 topLeft: Radius.circular(20.w),
@@ -928,7 +737,7 @@ class GuestPageHome extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: SvgPicture.asset("assets/pose2.svg",
+                              child: SvgPicture.asset("assets/pose3.svg",
                                   width: 90.w, height: 90.w),
                             ),
                             Center(
@@ -946,27 +755,29 @@ class GuestPageHome extends StatelessWidget {
                         print("2nd options:profile ");
                       },
                       child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(149, 162, 162, 1.0),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.w),
-                                  topLeft: Radius.circular(20.w),
-                                  bottomRight: Radius.circular(20.w),
-                                  bottomLeft: Radius.circular(20.w))),
-                          margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:  EdgeInsets.only(top:10.w,bottom:10.w),
-                                child: SvgPicture.asset(
-                                    "assets/pose2.svg",
-                                    width: 90.w,
-                                    height:90.w
-                                ),
-                              ),
-                              Center(child: Text("Profile",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.w),)),
-                            ],
-                          ),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(188, 197, 197, 1.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20.w),
+                                topLeft: Radius.circular(20.w),
+                                bottomRight: Radius.circular(20.w),
+                                bottomLeft: Radius.circular(20.w))),
+                        margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: SvgPicture.asset("assets/pose5.svg",
+                                  width: 90.w, height: 90.w),
+                            ),
+                            Center(
+                                child: Text(
+                              "Profile",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
+                          ],
+                        ),
                       ),
                     ),
                     InkWell(
@@ -975,7 +786,7 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                           decoration: BoxDecoration(
-                              color: Color.fromRGBO(149, 162, 162, 1.0),
+                              color: Color.fromRGBO(188, 197, 197, 1.0),
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(20.w),
                                   topLeft: Radius.circular(20.w),
@@ -985,14 +796,18 @@ class GuestPageHome extends StatelessWidget {
                           child: Column(
                             children: [
                               Padding(
-                                padding:  EdgeInsets.only(top:10.w,bottom:10.w),
-                                child: SvgPicture.asset(
-                                    "assets/pose2.svg",
-                                    width: 90.w,
-                                    height:90.w
-                                ),
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: SvgPicture.asset("assets/pose4.svg",
+                                    width: 90.w, height: 90.w),
                               ),
-                              Center(child: Text("Settings",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.w),)),
+                              Center(
+                                  child: Text(
+                                "Settings",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
                             ],
                           )),
                     ),
@@ -1001,34 +816,59 @@ class GuestPageHome extends StatelessWidget {
                         print("4th options: About this app");
                       },
                       child: Container(
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(149, 162, 162, 1.0),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.w),
-                                topLeft: Radius.circular(20.w),
-                                bottomRight: Radius.circular(20.w),
-                                bottomLeft: Radius.circular(20.w))),
-                        margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                        child:Column(
-                          children: [
-                            Padding(
-                              padding:  EdgeInsets.only(top:10.w,bottom:10.w),
-                              child: SvgPicture.asset(
-                                  "assets/pose2.svg",
-                                  width: 90.w,
-                                  height:90.w
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.w),
+                                  topLeft: Radius.circular(20.w),
+                                  bottomRight: Radius.circular(20.w),
+                                  bottomLeft: Radius.circular(20.w))),
+                          margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 30.w, bottom: 10.w),
+                                child: SvgPicture.asset("assets/pose6.svg",
+                                    width: 50.w, height: 70.w),
                               ),
-                            ),
-                            Center(child: Text("About",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.w),)),
-                          ],
-                        )
-                      ),
+                              Center(
+                                  child: Text(
+                                "About us",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
+                            ],
+                          )),
                     ),
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class InstructionPage extends StatelessWidget {
+  const InstructionPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: ()async =>false,
+      child: Scaffold(
+        body: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PoseDetectorView()));
+          },
+          child: Container(
+            color: Colors.red,
+          ),
         ),
       ),
     );
