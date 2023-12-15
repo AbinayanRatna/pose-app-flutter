@@ -138,7 +138,7 @@ class _MyAppState extends State<MyApp2> {
                   flex: 10,
                   child: Container(
                     color: const Color.fromRGBO(255, 255, 255, 1.0),
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.of(context).size.width / 2,
                     alignment: Alignment.center,
                     child: Center(
                       child: SvgPicture.asset("assets/pose1.svg"),
@@ -158,114 +158,123 @@ class _MyAppState extends State<MyApp2> {
                             bottomLeft: Radius.circular(40.w),
                             bottomRight: Radius.circular(40.w),
                           )),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 25.w, 0, 15.w),
-                            child: Text(
-                              "Welcome Buddy",
-                              style: TextStyle(
-                                color: const Color.fromRGBO(16, 36, 85, 1.0),
-                                fontWeight: FontWeight.w300,
-                                fontSize: 18.w,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 25.w, 0, 15.w),
+                              child: Text(
+                                "Welcome Buddy",
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(16, 36, 85, 1.0),
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 18.w,
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => GuestPageHome()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(15.w), // <-- Radius
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => GuestPageHome()),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        15.w), // <-- Radius
+                                  ),
+                                  elevation: 0,
+                                  primary:
+                                      const Color.fromRGBO(19, 154, 157, 1.0),
+                                  onPrimary: Colors.white,
                                 ),
-                                elevation: 0,
-                                primary:
-                                    const Color.fromRGBO(19, 154, 157, 1.0),
-                                onPrimary: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Text(
-                                  "Enter as Guest",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.w,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(
+                                    "Enter as Guest",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18.w,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                //   print("Padding value 1: ${EdgeInsets.only(top: 10.w)}");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginPageVIP()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(15.w), // <-- Radius
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  //   print("Padding value 1: ${EdgeInsets.only(top: 10.w)}");
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginPageVIP()),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        15.w), // <-- Radius
+                                  ),
+                                  elevation: 0,
+                                  primary:
+                                      const Color.fromRGBO(19, 154, 157, 1.0),
+                                  onPrimary: Colors.white,
                                 ),
-                                elevation: 0,
-                                primary:
-                                    const Color.fromRGBO(19, 154, 157, 1.0),
-                                onPrimary: Colors.white,
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(22.w, 10.w, 22.w, 10.w),
-                                child: Text(
-                                  "Login as VIP",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.w,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      22.w, 10.w, 22.w, 10.w),
+                                  child: Text(
+                                    "Login as VIP",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18.w,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(15.w), // <-- Radius
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignupPageVIP()),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        15.w), // <-- Radius
+                                  ),
+                                  elevation: 0,
+                                  primary:
+                                      const Color.fromRGBO(19, 154, 157, 1.0),
+                                  onPrimary: Colors.white,
                                 ),
-                                elevation: 0,
-                                primary:
-                                    const Color.fromRGBO(19, 154, 157, 1.0),
-                                onPrimary: Colors.white,
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 10.w),
-                                child: Text(
-                                  "Signup for VIP",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.w,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      10.w, 10.w, 10.w, 10.w),
+                                  child: Text(
+                                    "Signup for VIP",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18.w,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )),
                 ),
                 Expanded(
@@ -517,7 +526,7 @@ class LoginPageVIP extends StatelessWidget {
                         padding:
                             EdgeInsets.only(bottom: 4.w, top: 20.w, left: 30.w),
                         child: Text(
-                          "Username",
+                          "Email",
                           style: TextStyle(
                             color: const Color.fromRGBO(85, 38, 25, 1),
                             fontWeight: FontWeight.bold,
@@ -531,7 +540,7 @@ class LoginPageVIP extends StatelessWidget {
                         child: const TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: "Enter the username"),
+                              hintText: "Enter the email"),
                         ),
                       ),
                       Padding(
@@ -588,7 +597,10 @@ class LoginPageVIP extends StatelessWidget {
                               onPressed: () {
                                 print(
                                     "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
-                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MyApp2()),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
@@ -610,7 +622,32 @@ class LoginPageVIP extends StatelessWidget {
                             ),
                           ]),
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.w),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Does not have an account ?",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontSize: 15.w)),
+                              GestureDetector(
+                                onTap:(){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SignupPageVIP()),
+                                  );
+                                } ,
+                                child: Text(" Sign up",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color.fromRGBO(19, 154, 157, 1.0),
+                                        fontSize: 15.w)),
+                              )
+                            ]),
+                      ),
                     ],
                   ),
                 ),
@@ -623,6 +660,188 @@ class LoginPageVIP extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class SignupPageVIP extends StatelessWidget {
+  const SignupPageVIP({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      //designSize: const Size(411, 899),
+      minTextAdapt: true,
+      child: Scaffold(
+        backgroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            Padding(
+              padding: EdgeInsets.only(
+                  top: (MediaQuery.of(context).size.height) / (4.0)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(85, 38, 25, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25.w,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(bottom: 4.w, top: 20.w, left: 30.w),
+                    child: Text(
+                      "Email",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(85, 38, 25, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.w,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 10.w, top: 4.w, left: 30.w, right: 30.w),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter the email"),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
+                    child: Text(
+                      "Username",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(85, 38, 25, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.w,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 10.w, top: 4.w, left: 30.w, right: 30.w),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter the username"),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
+                    child: Text(
+                      "Password",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(85, 38, 25, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.w,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 10.w, top: 4.w, left: 30.w, right: 30.w),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter the password"),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.w),
+                    child: Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary:
+                                    const Color.fromRGBO(19, 154, 157, 1.0),
+                                onPrimary: Colors.white,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 10.w),
+                                child: Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                print(
+                                    "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MyApp2()),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary:
+                                    const Color.fromRGBO(19, 154, 157, 1.0),
+                                onPrimary: Colors.white,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.w),
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Already have an account ?",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 15.w)),
+                      GestureDetector(
+                        onTap:(){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPageVIP()),
+                          );
+                        } ,
+                        child: Text(" Log in",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromRGBO(19, 154, 157, 1.0),
+                                fontSize: 15.w)),
+                      )
+                    ]),
+                  ),
+                ],
+              ),
+            ),
+          ]),
         ),
       ),
     );
@@ -721,7 +940,8 @@ class GuestPageHome extends StatelessWidget {
                       print("1st Options: Poses");
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 0)),
+                        MaterialPageRoute(
+                            builder: (context) => NavBarPage(currentTab: 0)),
                       );
                     },
                     child: Container(
@@ -736,9 +956,11 @@ class GuestPageHome extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                            child: Icon(Icons.accessibility_new,color: Colors.black,)
-                          ),
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: Icon(
+                                Icons.accessibility_new,
+                                color: Colors.black,
+                              )),
                           Center(
                               child: Text(
                             "Poses",
@@ -754,7 +976,8 @@ class GuestPageHome extends StatelessWidget {
                       print("2nd options:profile ");
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 2)),
+                        MaterialPageRoute(
+                            builder: (context) => NavBarPage(currentTab: 2)),
                       );
                     },
                     child: Container(
@@ -769,9 +992,11 @@ class GuestPageHome extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                            child: Icon(Icons.account_circle,color: Colors.black,)
-                          ),
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: Icon(
+                                Icons.account_circle,
+                                color: Colors.black,
+                              )),
                           Center(
                               child: Text(
                             "Profile",
@@ -787,7 +1012,8 @@ class GuestPageHome extends StatelessWidget {
                       print("3rd options: Settings");
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
+                        MaterialPageRoute(
+                            builder: (context) => NavBarPage(currentTab: 1)),
                       );
                     },
                     child: Container(
@@ -802,16 +1028,17 @@ class GuestPageHome extends StatelessWidget {
                         child: Column(
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(Icons.settings,color: Colors.black,),
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: Icon(
+                                Icons.settings,
+                                color: Colors.black,
+                              ),
                             ),
                             Center(
                                 child: Text(
                               "Settings",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.w),
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
                             )),
                           ],
                         )),
@@ -821,7 +1048,8 @@ class GuestPageHome extends StatelessWidget {
                       print("4th options: about app");
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 3)),
+                        MaterialPageRoute(
+                            builder: (context) => NavBarPage(currentTab: 3)),
                       );
                     },
                     child: Container(
@@ -836,16 +1064,17 @@ class GuestPageHome extends StatelessWidget {
                         child: Column(
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(Icons.account_tree_outlined,color: Colors.black,),
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: Icon(
+                                Icons.account_tree_outlined,
+                                color: Colors.black,
+                              ),
                             ),
                             Center(
                                 child: Text(
                               "About us",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.w),
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
                             )),
                           ],
                         )),
@@ -873,17 +1102,18 @@ class GuestPageHome extends StatelessWidget {
                         child: Column(
                           children: [
                             Padding(
-                              padding:
-                              EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(Icons.share_outlined,color: Colors.black,),
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: Icon(
+                                Icons.share_outlined,
+                                color: Colors.black,
+                              ),
                             ),
                             Center(
                                 child: Text(
-                                  "Share us",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.w),
-                                )),
+                              "Share us",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
                           ],
                         )),
                   ),
@@ -910,17 +1140,18 @@ class GuestPageHome extends StatelessWidget {
                         child: Column(
                           children: [
                             Padding(
-                              padding:
-                              EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(Icons.star_rate_outlined,color: Colors.black,),
+                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
+                              child: Icon(
+                                Icons.star_rate_outlined,
+                                color: Colors.black,
+                              ),
                             ),
                             Center(
                                 child: Text(
-                                  "Rate us",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.w),
-                                )),
+                              "Rate us",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
                           ],
                         )),
                   ),
@@ -943,28 +1174,24 @@ class NavBarPage extends StatefulWidget {
   State<NavBarPage> createState() => _NavBarPageState();
 }
 
-
 class _NavBarPageState extends State<NavBarPage> {
   late final PageController _pageController;
   late final NotchBottomBarController _controller;
-  late final
-
-  int maxCount = 4;
+  late final int maxCount = 4;
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
-
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _pageController = PageController(initialPage: widget.currentTab);
     _controller = NotchBottomBarController(index: widget.currentTab);
-
   }
+
   /// widget list
   final List<Widget> bottomBarPages = [
     const PoseListPage(),
@@ -1008,7 +1235,6 @@ class _NavBarPageState extends State<NavBarPage> {
                   ),
                   itemLabel: 'Person',
                 ),
-
                 BottomBarItem(
                   inActiveItem: Icon(
                     Icons.settings,
@@ -1020,7 +1246,6 @@ class _NavBarPageState extends State<NavBarPage> {
                   ),
                   itemLabel: 'Settings',
                 ),
-
                 BottomBarItem(
                   inActiveItem: Icon(
                     Icons.person,
@@ -1032,7 +1257,6 @@ class _NavBarPageState extends State<NavBarPage> {
                   ),
                   itemLabel: 'personal',
                 ),
-
                 BottomBarItem(
                   inActiveItem: Icon(
                     Icons.account_tree_outlined,
@@ -1061,9 +1285,13 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Profile"),backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),),
-    body:Container(
-        color: const Color.fromRGBO(255, 255, 255, 1.0), child: const Center(child: Text('Profile Page'))));
+        appBar: AppBar(
+          title: const Text("Profile"),
+          backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+        ),
+        body: Container(
+            color: const Color.fromRGBO(255, 255, 255, 1.0),
+            child: const Center(child: Text('Profile Page'))));
   }
 }
 
@@ -1073,9 +1301,13 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Settings"),backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),),
-    body:Container(
-        color: const Color.fromRGBO(255, 255, 255, 1.0), child: const Center(child: Text('Setting Page'))));
+        appBar: AppBar(
+          title: const Text("Settings"),
+          backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+        ),
+        body: Container(
+            color: const Color.fromRGBO(255, 255, 255, 1.0),
+            child: const Center(child: Text('Setting Page'))));
   }
 }
 
@@ -1085,9 +1317,13 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("About us"),backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),),
+      appBar: AppBar(
+        title: const Text("About us"),
+        backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+      ),
       body: Container(
-          color: const Color.fromRGBO(255, 255, 255, 1.0), child: const Center(child: Text('About Us'))),
+          color: const Color.fromRGBO(255, 255, 255, 1.0),
+          child: const Center(child: Text('About Us'))),
     );
   }
 }
