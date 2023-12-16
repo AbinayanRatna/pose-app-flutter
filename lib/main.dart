@@ -599,7 +599,8 @@ class LoginPageVIP extends StatelessWidget {
                                     "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyApp2()),
+                                  MaterialPageRoute(
+                                      builder: (context) => MyApp2()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -634,16 +635,18 @@ class LoginPageVIP extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: 15.w)),
                               GestureDetector(
-                                onTap:(){
+                                onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => SignupPageVIP()),
+                                    MaterialPageRoute(
+                                        builder: (context) => SignupPageVIP()),
                                   );
-                                } ,
+                                },
                                 child: Text(" Sign up",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
-                                        color: const Color.fromRGBO(19, 154, 157, 1.0),
+                                        color: const Color.fromRGBO(
+                                            19, 154, 157, 1.0),
                                         fontSize: 15.w)),
                               )
                             ]),
@@ -680,7 +683,7 @@ class SignupPageVIP extends StatelessWidget {
           child: Column(children: [
             Padding(
               padding: EdgeInsets.only(
-                  top: (MediaQuery.of(context).size.height) / (4.0)),
+                  top: (MediaQuery.of(context).size.height)/7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.center,
@@ -717,8 +720,7 @@ class SignupPageVIP extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
+                    padding: EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
                     child: Text(
                       "Username",
                       style: TextStyle(
@@ -758,13 +760,63 @@ class SignupPageVIP extends StatelessWidget {
                     ),
                   ),
                   Padding(
+                    padding: EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
+                    child: Text(
+                      "Confirm Password",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(85, 38, 25, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.w,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 10.w, top: 4.w, left: 30.w, right: 30.w),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Confirm the password"),
+                    ),
+                  ),
+                  Padding(
                     padding: EdgeInsets.only(top: 10.w),
                     child: Center(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                print(
+                                    "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyApp2()),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary:
+                                const Color.fromRGBO(19, 154, 157, 1.0),
+                                onPrimary: Colors.white,
+                              ),
+                              child: Padding(
+                                padding:
+                                EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push((context), MaterialPageRoute(builder: (context)=>PaymentPage()));
+                              },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary:
@@ -775,7 +827,7 @@ class SignupPageVIP extends StatelessWidget {
                                 padding:
                                     EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 10.w),
                                 child: Text(
-                                  "Sign Up",
+                                  "Next",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.w,
@@ -783,60 +835,36 @@ class SignupPageVIP extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                print(
-                                    "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => MyApp2()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                primary:
-                                    const Color.fromRGBO(19, 154, 157, 1.0),
-                                onPrimary: Colors.white,
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
-                                child: Text(
-                                  "Back",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.w,
-                                  ),
-                                ),
-                              ),
-                            ),
+
                           ]),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.w),
                     child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Already have an account ?",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 15.w)),
-                      GestureDetector(
-                        onTap:(){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginPageVIP()),
-                          );
-                        } ,
-                        child: Text(" Log in",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromRGBO(19, 154, 157, 1.0),
-                                fontSize: 15.w)),
-                      )
-                    ]),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already have an account ?",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontSize: 15.w)),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPageVIP()),
+                              );
+                            },
+                            child: Text(" Log in",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color:
+                                        const Color.fromRGBO(19, 154, 157, 1.0),
+                                    fontSize: 15.w)),
+                          )
+                        ]),
                   ),
                 ],
               ),
@@ -846,6 +874,21 @@ class SignupPageVIP extends StatelessWidget {
       ),
     );
   }
+}
+
+class PaymentPage extends StatelessWidget {
+  const PaymentPage ({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      body:Container(
+        color: Colors.white,
+      ),
+    );
+  }
+
 }
 
 class GuestPageHome extends StatelessWidget {
@@ -863,28 +906,39 @@ class GuestPageHome extends StatelessWidget {
     return ScreenUtilInit(
       minTextAdapt: true,
       child: Scaffold(
+        appBar: AppBar(
+          title: Text("Welcome Home"),
+          actions:  [
+            IconButton(onPressed: (){}, icon: const Icon(Icons.logout))
+          ],
+          backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+          automaticallyImplyLeading: false,
+        ),
         backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 1.6.w,
+            Expanded(
+              flex: 5,
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(255, 255, 255, 1.0),
                   borderRadius: BorderRadius.only(
                     //bottomLeft: Radius.circular(20.w),
                     bottomRight: Radius.circular(60.w),
+                    bottomLeft: Radius.circular(60.w),
                   ),
+
+
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 70.w, left: 20.w),
+                      padding: EdgeInsets.only(top: 30.w, left: 20.w),
                       child: Text(
-                        "Welcome (Username),",
+                        "Hello (Username),",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.w,
@@ -893,8 +947,9 @@ class GuestPageHome extends StatelessWidget {
                       ),
                     ),
                     Container(
+                      padding: EdgeInsets.only(left:10.w),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 3.w,
+                      height: MediaQuery.of(context).size.height / 2.5.w,
                       child: ListView.builder(
                           // This next line does the trick.
                           scrollDirection: Axis.horizontal,
@@ -904,7 +959,7 @@ class GuestPageHome extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.8.w,
                               child: Card(
                                 margin: EdgeInsets.only(
-                                    left: 15.w, top: 40.w, right: 15.w),
+                                    left: 5.w, top: 40.w, right: 10.w),
                                 color: Colors.blue,
                                 child: Container(
                                   child: Center(
@@ -922,240 +977,253 @@ class GuestPageHome extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(20.w, 30.w, 20.w, 0),
-              //color: Colors.blue,
-              height: MediaQuery.of(context).size.height -
-                  (MediaQuery.of(context).size.height / 1.6.w),
-              child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:
-                        MediaQuery.of(context).size.width < 700 ? 3 : 3,
-                    childAspectRatio: (1.w),
-                    mainAxisSpacing: 30.w,
-                    crossAxisSpacing: 30.w),
-                children: [
-                  InkWell(
-                    onTap: () {
-                      print("1st Options: Poses");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavBarPage(currentTab: 0)),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(188, 197, 197, 1.0),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20.w),
-                              topLeft: Radius.circular(20.w),
-                              bottomRight: Radius.circular(20.w),
-                              bottomLeft: Radius.circular(20.w))),
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Column(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(
-                                Icons.accessibility_new,
-                                color: Colors.black,
-                              )),
-                          Center(
-                              child: Text(
-                            "Poses",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.w),
-                          )),
-                        ],
+            Expanded(
+              flex: 4,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20.w, 40.w, 20.w, 0),
+                //color: Colors.blue,
+                height: MediaQuery.of(context).size.height -
+                    (MediaQuery.of(context).size.height / 1.6.w),
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:
+                          MediaQuery.of(context).size.width < 700 ? 3 : 3,
+                      childAspectRatio: (1.w),
+                      mainAxisSpacing: 30.w,
+                      crossAxisSpacing: 30.w),
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        print("1st Options: Poses");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavBarPage(currentTab: 0)),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(188, 197, 197, 1.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20.w),
+                                topLeft: Radius.circular(20.w),
+                                bottomRight: Radius.circular(20.w),
+                                bottomLeft: Radius.circular(20.w))),
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Column(
+                          children: [
+                            Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: Icon(
+                                  Icons.accessibility_new,
+                                  color: Colors.black,
+                                )),
+                            Center(
+                                child: Text(
+                              "Poses",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print("2nd options:profile ");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavBarPage(currentTab: 2)),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(188, 197, 197, 1.0),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20.w),
-                              topLeft: Radius.circular(20.w),
-                              bottomRight: Radius.circular(20.w),
-                              bottomLeft: Radius.circular(20.w))),
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Column(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(
-                                Icons.account_circle,
-                                color: Colors.black,
-                              )),
-                          Center(
-                              child: Text(
-                            "Profile",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.w),
-                          )),
-                        ],
+                    InkWell(
+                      onTap: () {
+                        print("2nd options:profile ");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavBarPage(currentTab: 2)),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(188, 197, 197, 1.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20.w),
+                                topLeft: Radius.circular(20.w),
+                                bottomRight: Radius.circular(20.w),
+                                bottomLeft: Radius.circular(20.w))),
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Column(
+                          children: [
+                            Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: Icon(
+                                  Icons.account_circle,
+                                  color: Colors.black,
+                                )),
+                            Center(
+                                child: Text(
+                              "Profile",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print("3rd options: Settings");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavBarPage(currentTab: 1)),
-                      );
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(188, 197, 197, 1.0),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.w),
-                                topLeft: Radius.circular(20.w),
-                                bottomRight: Radius.circular(20.w),
-                                bottomLeft: Radius.circular(20.w))),
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(
-                                Icons.settings,
-                                color: Colors.black,
+                    InkWell(
+                      onTap: () {
+                        print("3rd options: Settings");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavBarPage(currentTab: 1)),
+                        );
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.w),
+                                  topLeft: Radius.circular(20.w),
+                                  bottomRight: Radius.circular(20.w),
+                                  bottomLeft: Radius.circular(20.w))),
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: Icon(
+                                  Icons.settings,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            Center(
-                                child: Text(
-                              "Settings",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15.w),
-                            )),
-                          ],
-                        )),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print("4th options: about app");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavBarPage(currentTab: 3)),
-                      );
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(188, 197, 197, 1.0),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.w),
-                                topLeft: Radius.circular(20.w),
-                                bottomRight: Radius.circular(20.w),
-                                bottomLeft: Radius.circular(20.w))),
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(
-                                Icons.account_tree_outlined,
-                                color: Colors.black,
+                              Center(
+                                  child: Text(
+                                "Settings",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
+                            ],
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        print("4th options: about app");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavBarPage(currentTab: 3)),
+                        );
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.w),
+                                  topLeft: Radius.circular(20.w),
+                                  bottomRight: Radius.circular(20.w),
+                                  bottomLeft: Radius.circular(20.w))),
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: Icon(
+                                  Icons.account_tree_outlined,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            Center(
-                                child: Text(
-                              "About us",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15.w),
-                            )),
-                          ],
-                        )),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print("5rd options: Share");
-                      /*
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
-                      );
+                              Center(
+                                  child: Text(
+                                "About us",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
+                            ],
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        print("5rd options: Share");
+                        /*
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
+                        );
 
-                       */
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(188, 197, 197, 1.0),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.w),
-                                topLeft: Radius.circular(20.w),
-                                bottomRight: Radius.circular(20.w),
-                                bottomLeft: Radius.circular(20.w))),
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(
-                                Icons.share_outlined,
-                                color: Colors.black,
+                         */
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.w),
+                                  topLeft: Radius.circular(20.w),
+                                  bottomRight: Radius.circular(20.w),
+                                  bottomLeft: Radius.circular(20.w))),
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: Icon(
+                                  Icons.share_outlined,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            Center(
-                                child: Text(
-                              "Share us",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15.w),
-                            )),
-                          ],
-                        )),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print("6rd options: Rateus");
-                      /*
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
-                      );
+                              Center(
+                                  child: Text(
+                                "Share us",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
+                            ],
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        print("6rd options: Rateus");
+                        /*
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
+                        );
 
-                       */
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(188, 197, 197, 1.0),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.w),
-                                topLeft: Radius.circular(20.w),
-                                bottomRight: Radius.circular(20.w),
-                                bottomLeft: Radius.circular(20.w))),
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.w, bottom: 10.w),
-                              child: Icon(
-                                Icons.star_rate_outlined,
-                                color: Colors.black,
+                         */
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.w),
+                                  topLeft: Radius.circular(20.w),
+                                  bottomRight: Radius.circular(20.w),
+                                  bottomLeft: Radius.circular(20.w))),
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                child: Icon(
+                                  Icons.star_rate_outlined,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            Center(
-                                child: Text(
-                              "Rate us",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15.w),
-                            )),
-                          ],
-                        )),
-                  ),
-                ],
+                              Center(
+                                  child: Text(
+                                "Rate us",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
