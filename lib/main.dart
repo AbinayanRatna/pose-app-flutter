@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animated_notch_bottom_bar_no_border_radius/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:bouncing_button/bouncing_button.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart';
+import 'package:pose_detection_app/poseType.dart';
 import 'package:pose_detection_app/views/pose_detection_view.dart';
 
 void main() {
@@ -683,7 +686,7 @@ class SignupPageVIP extends StatelessWidget {
           child: Column(children: [
             Padding(
               padding: EdgeInsets.only(
-                  top: (MediaQuery.of(context).size.height)/7),
+                  top: (MediaQuery.of(context).size.height) / 7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.center,
@@ -798,12 +801,12 @@ class SignupPageVIP extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary:
-                                const Color.fromRGBO(19, 154, 157, 1.0),
+                                    const Color.fromRGBO(19, 154, 157, 1.0),
                                 onPrimary: Colors.white,
                               ),
                               child: Padding(
                                 padding:
-                                EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                                    EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
                                 child: Text(
                                   "Back",
                                   style: TextStyle(
@@ -815,7 +818,10 @@ class SignupPageVIP extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push((context), MaterialPageRoute(builder: (context)=>PaymentPage()));
+                                Navigator.push(
+                                    (context),
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentPage()));
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
@@ -835,7 +841,6 @@ class SignupPageVIP extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                           ]),
                     ),
                   ),
@@ -877,18 +882,17 @@ class SignupPageVIP extends StatelessWidget {
 }
 
 class PaymentPage extends StatelessWidget {
-  const PaymentPage ({super.key});
+  const PaymentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body:Container(
+      body: Container(
         color: Colors.white,
       ),
     );
   }
-
 }
 
 class GuestPageHome extends StatelessWidget {
@@ -908,8 +912,8 @@ class GuestPageHome extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Welcome Home"),
-          actions:  [
-            IconButton(onPressed: (){}, icon: const Icon(Icons.logout))
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.logout))
           ],
           backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
           automaticallyImplyLeading: false,
@@ -928,8 +932,6 @@ class GuestPageHome extends StatelessWidget {
                     bottomRight: Radius.circular(60.w),
                     bottomLeft: Radius.circular(60.w),
                   ),
-
-
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -947,7 +949,7 @@ class GuestPageHome extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left:10.w),
+                      padding: EdgeInsets.only(left: 10.w),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2.5.w,
                       child: ListView.builder(
@@ -1262,7 +1264,7 @@ class _NavBarPageState extends State<NavBarPage> {
 
   /// widget list
   final List<Widget> bottomBarPages = [
-    const PoseListPage(),
+    PoseListPageList(),
     const SettingPage(),
     const ProfilePage(),
     const AboutUs(),
@@ -1392,6 +1394,115 @@ class AboutUs extends StatelessWidget {
       body: Container(
           color: const Color.fromRGBO(255, 255, 255, 1.0),
           child: const Center(child: Text('About Us'))),
+    );
+  }
+}
+
+class PoseListPageList extends StatefulWidget {
+  @override
+  State<PoseListPageList> createState() => _PoseListPageList();
+}
+
+class _PoseListPageList extends State<PoseListPageList> {
+  List<PoseType> poseList = [
+    PoseType("assets/pose_1.png", "Pose 1", "Try this pose.It is a good pose."),
+    PoseType("assets/pose_2.png", "Pose 2", "Try this pose.It is a good pose."),
+    PoseType("assets/pose_3.png", "Pose 3", "Try this pose.It is a good pose."),
+    PoseType("assets/pose_4.png", "Pose 4", "Try this pose.It is a good pose."),
+  ];
+  int currentpage = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(title:Text("Select a pose")),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedSwitcher(
+            duration: Duration(milliseconds: 500),
+            child: Container(
+                key: ValueKey<String>(poseList[currentpage].imagePath),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(poseList[currentpage].imagePath), fit: BoxFit.cover,),
+                ),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 15,
+                    sigmaY: 15,
+                  ),
+                  child: Container(color: Colors.black.withOpacity(0.2)),
+                )),
+          ),
+          FractionallySizedBox(
+            heightFactor: 0.55,
+            child: PageView.builder(
+              itemCount: poseList.length,
+              onPageChanged: (int page) {
+                setState(() {
+                  currentpage = page;
+                });
+              },
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: EdgeInsets.only(left:30,right:30),
+                  color: Colors.white, // White background color
+                  child: Center(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5, // Adjust the width factor as needed
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            margin: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(poseList[index].imagePath),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.circular(32),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  spreadRadius: 5,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            poseList[index].title,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            poseList[index].description,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+
+
+          ),
+        ],
+      ),
     );
   }
 }
