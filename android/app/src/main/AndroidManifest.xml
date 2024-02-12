@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="pose_detection_app"
+        android:label="Craftie"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

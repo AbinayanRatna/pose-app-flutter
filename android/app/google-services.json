@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "908067463207",
+    "project_id": "pose-app-new",
+    "storage_bucket": "pose-app-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908067463207:android:70c0e1218b11889eeb6e02",
+        "android_client_info": {
+          "package_name": "com.example.pose_detection_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC24YIdu2Wg65Y-nz6SnlAQPrdVLUyt8Do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

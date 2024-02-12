@@ -46,6 +46,14 @@ class _CameraViewState extends State<CameraView> {
   double _maxAvailableExposureOffset = 0.0;
   double _currentExposureOffset = 0.0;
   bool _changingCameraLens = false;
+  double _angleLeftShoulder = 0.0;
+  double _angleLeftElbow = 0.0;
+  double _angleLeftHip = 0.0;
+  double _angleLeftKnee = 0.0;
+  double _angleRightShoulder = 0.0;
+  double _angleRightElbow = 0.0;
+  double _angleRightHip = 0.0;
+  double _angleRightKnee = 0.0;
 
   PoseLandmark? p1;
   PoseLandmark? p2;
@@ -88,38 +96,115 @@ class _CameraViewState extends State<CameraView> {
         final elbowLeft = getPoseLandmark(PoseLandmarkType.leftElbow);
         final shoulderLeft = getPoseLandmark(PoseLandmarkType.leftShoulder);
         final hipLeft = getPoseLandmark(PoseLandmarkType.leftHip);
+        final wristLeft = getPoseLandmark(PoseLandmarkType.leftWrist);
+        final kneeLeft = getPoseLandmark(PoseLandmarkType.leftKnee);
+        final ankleLeft = getPoseLandmark(PoseLandmarkType.leftAnkle);
 
         final elbowRight = getPoseLandmark(PoseLandmarkType.rightElbow);
         final shoulderRight = getPoseLandmark(PoseLandmarkType.rightShoulder);
         final hipRight = getPoseLandmark(PoseLandmarkType.rightHip);
+        final wristRight = getPoseLandmark(PoseLandmarkType.rightWrist);
+        final kneeRight = getPoseLandmark(PoseLandmarkType.rightKnee);
+        final ankleRight = getPoseLandmark(PoseLandmarkType.rightAnkle);
 
         if (elbowLeft != null &&
             shoulderLeft != null &&
             hipLeft != null &&
             elbowRight != null &&
             shoulderRight != null &&
-            hipRight != null) {
-          final angleLeft = utils.angleElbowShoulderHip(
+            hipRight != null &&
+            wristRight !=null &&
+            wristLeft !=null &&
+            kneeRight !=null &&
+            kneeLeft !=null &&
+            ankleRight !=null &&
+            ankleLeft !=null
+        ) {
+          final angleLeftShoulder = utils.angleElbowShoulderHipLeft(
             elbowLeft,
             shoulderLeft,
             hipLeft,
           );
 
-          final angleRight = utils.angleElbowShoulderHip(
+          final angleLeftHip = utils.angleShoulderHipKneeLeft(
+            shoulderLeft,
+            hipLeft,
+            kneeLeft,
+          );
+
+          final angleLeftKnee = utils.angleHipKneeAnkleLeft(
+            hipLeft,
+            kneeLeft,
+            ankleLeft,
+          );
+
+          final angleLeftElbow = utils.angleWristElbowShoulderLeft(
+            wristLeft,
+            elbowLeft,
+            shoulderLeft,
+          );
+
+          final angleRightShoulder = utils.angleElbowShoulderHipRight(
             elbowRight,
             shoulderRight,
             hipRight,
           );
 
-          final poseState = utils.isNearly90DegreePose(
-            angleRight,
-            angleLeft,
+          final angleRightHip = utils.angleShoulderHipKneeRight(
+            shoulderRight,
+            hipRight,
+            kneeRight,
+          );
+
+          final angleRightKnee = utils.angleHipKneeAnkleRight(
+            hipRight,
+            kneeRight,
+            ankleRight,
+          );
+
+          final angleRightElbow = utils.angleWristElbowShoulderRight(
+            wristRight,
+            elbowRight,
+            shoulderRight,
+          );
+
+          setState(() {
+            _angleLeftShoulder = angleLeftShoulder;
+            _angleLeftElbow = angleLeftElbow;
+            _angleLeftHip = angleLeftHip;
+            _angleLeftKnee = angleLeftKnee;
+            _angleRightShoulder = angleRightShoulder;
+            _angleRightElbow = angleRightElbow;
+            _angleRightHip = angleRightHip;
+            _angleRightKnee = angleRightKnee;
+          });
+
+          final poseState = utils.isHandsOnHeadPose(
+            angleRightShoulder,
+            angleRightElbow,
+            angleRightKnee,
+            angleLeftShoulder,
+            angleLeftKnee,
             poseDetector.state,
           );
 
-          print('Left Angle: ${angleLeft.toStringAsFixed(2)}');
-          print('Right Angle: ${angleRight.toStringAsFixed(2)}');
+/*
+          final poseState = utils.isHandsOnHipPose(
+            angleRightShoulder,
+            angleLeftShoulder,
+            angleRightElbow,
+            angleLeftElbow,
+            poseDetector.state,
+          );
 
+          final poseState = utils.isOpenArmPose(
+            angleRightShoulder,
+            angleLeftShoulder,
+            angleRightElbow,
+            angleLeftElbow,
+            poseDetector.state,
+          );
+*/
           if (poseState != null && poseState == model.PoseState.correct) {
             // Pose is nearly 90 degrees on both sides, handle the state change or any actions here
             poseDetector.setPoseState(poseState);
@@ -179,6 +264,7 @@ class _CameraViewState extends State<CameraView> {
   Widget _resultsWidget() {
     final bloc = BlocProvider.of<model.PoseDetector>(context);
     String poseText = '';
+        //''+'leftelbow : ${_angleLeftElbow.toStringAsFixed(1)} '+'lefthip : ${_angleLeftHip.toStringAsFixed(1)} '+'leftknee : ${_angleLeftKnee.toStringAsFixed(1)} ';
     bool isPoseCorrect = false;
     // Determine the text to display based on the pose state
     switch (bloc.state) {
@@ -191,11 +277,18 @@ class _CameraViewState extends State<CameraView> {
         isPoseCorrect = false;
         break;
       case model.PoseState.neutral:
-        poseText = 'Incorrect Pose';
+        poseText = 'neutral Pose';
         break;
       // Add other cases if needed for different states
     }
 
+    String poseText2 = 'rightShoulder : ${_angleRightShoulder.toStringAsFixed(0)} \n'+'leftShoulder : ${_angleLeftShoulder.toStringAsFixed(0)} \n'+
+        'rightelbow : ${_angleRightElbow.toStringAsFixed(0)} \n'+'leftelbow : ${_angleLeftElbow.toStringAsFixed(0)}  \n'+
+        'leftelHip : ${_angleLeftHip.toStringAsFixed(0)}  \n'+'righthip : ${_angleRightHip.toStringAsFixed(0)}  \n'+
+        'rightknee : ${_angleRightKnee.toStringAsFixed(0)}  \n'+'leftknee: ${_angleLeftKnee.toStringAsFixed(0)}  \n'+poseText;
+
+
+   // String poseText2='rightShoulder : ${_angleRightSholuderLeftHip.toStringAsFixed(0)} \n'+'leftShoulder : ${_angleLeftShoulderRightHip.toStringAsFixed(0)} \n';
     return Positioned(
       left: 0,
       top: 80.w,
@@ -205,7 +298,7 @@ class _CameraViewState extends State<CameraView> {
         child: Column(
           children: [
             Container(
-              width: 100.w,
+              width: 200.w,
               decoration: BoxDecoration(
                 color: Colors.black54,
                 border: Border.all(
@@ -215,12 +308,12 @@ class _CameraViewState extends State<CameraView> {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Text(
-                poseText,
+                poseText2 ,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: isPoseCorrect ? Colors.white : Colors.red,
                   fontWeight: FontWeight.bold,
-                  fontSize: 14.w,
+                  fontSize: 24.w,
                 ),
               ),
             ),
