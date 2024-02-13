@@ -11,19 +11,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart';
+import 'package:pose_detection_app/pose.dart';
 import 'package:pose_detection_app/poseType.dart';
 import 'package:pose_detection_app/views/pose_detection_view.dart';
+import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Platform.isAndroid ? await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyC24YIdu2Wg65Y-nz6SnlAQPrdVLUyt8Do",
-      appId: "1:908067463207:android:70c0e1218b11889eeb6e02",
-      messagingSenderId: "908067463207",
-      projectId: "pose-app-new",
-    ),
-  ) : await Firebase.initializeApp();
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+            apiKey: "AIzaSyC24YIdu2Wg65Y-nz6SnlAQPrdVLUyt8Do",
+            appId: "1:908067463207:android:70c0e1218b11889eeb6e02",
+            messagingSenderId: "908067463207",
+            projectId: "pose-app-new",
+          ),
+        )
+      : await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -138,7 +142,7 @@ class _MyAppState extends State<MyApp2> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      //designSize: const Size(411, 899),
+        //designSize: const Size(411, 899),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
@@ -153,10 +157,7 @@ class _MyAppState extends State<MyApp2> {
                   flex: 10,
                   child: Container(
                     color: const Color.fromRGBO(255, 255, 255, 1.0),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 2,
+                    width: MediaQuery.of(context).size.width / 2,
                     alignment: Alignment.center,
                     child: Center(
                       child: SvgPicture.asset("assets/pose1.svg"),
@@ -166,14 +167,8 @@ class _MyAppState extends State<MyApp2> {
                 Expanded(
                   flex: 9,
                   child: Container(
-                      width: ((MediaQuery
-                          .of(context)
-                          .size
-                          .width) - (80.w)),
-                      height: (MediaQuery
-                          .of(context)
-                          .size
-                          .height),
+                      width: ((MediaQuery.of(context).size.width) - (80.w)),
+                      height: (MediaQuery.of(context).size.height),
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(255, 255, 255, 1.0),
                           borderRadius: BorderRadius.only(
@@ -213,7 +208,7 @@ class _MyAppState extends State<MyApp2> {
                                   ),
                                   elevation: 0,
                                   primary:
-                                  const Color.fromRGBO(19, 154, 157, 1.0),
+                                      const Color.fromRGBO(19, 154, 157, 1.0),
                                   onPrimary: Colors.white,
                                 ),
                                 child: Padding(
@@ -236,8 +231,7 @@ class _MyAppState extends State<MyApp2> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                         LoginPageVIP()),
+                                        builder: (context) => LoginPageVIP()),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -247,7 +241,7 @@ class _MyAppState extends State<MyApp2> {
                                   ),
                                   elevation: 0,
                                   primary:
-                                  const Color.fromRGBO(19, 154, 157, 1.0),
+                                      const Color.fromRGBO(19, 154, 157, 1.0),
                                   onPrimary: Colors.white,
                                 ),
                                 child: Padding(
@@ -280,7 +274,7 @@ class _MyAppState extends State<MyApp2> {
                                   ),
                                   elevation: 0,
                                   primary:
-                                  const Color.fromRGBO(19, 154, 157, 1.0),
+                                      const Color.fromRGBO(19, 154, 157, 1.0),
                                   onPrimary: Colors.white,
                                 ),
                                 child: Padding(
@@ -314,191 +308,114 @@ class _MyAppState extends State<MyApp2> {
 }
 
 class PoseListPage extends StatelessWidget {
-  const PoseListPage({super.key});
+  List<PosesDisplay> poseList = [
+    PosesDisplay('assets/pose_new_1.jpg', 'Open arm pose'),
+    PosesDisplay('assets/pose_new_2.jpg', 'Hands on head pose'),
+    PosesDisplay('assets/pose_new_3.jpg', 'Dab pose'),
+    PosesDisplay('assets/pose_new_4.jpg', 'Hands on hip pose'),
+    PosesDisplay('assets/pose_new_5.jpg', 'Upcoming')
+  ];
+
+  PoseListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Double size=(MediaQuery.of(context).size.height/2) as Double;
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
           title: const Text("Select a pose"),
           backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
         ),
-        body: Container(
-          padding: EdgeInsets.only(top: 20.w, bottom: 10.w, left: 0, right: 0),
-          child: GridView(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20.w,
-                mainAxisSpacing: 20.w),
-            children: [
-              InkWell(
-                onTap: () {
-                  print("1st options");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PoseDetectorView()),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20.w),
-                      topLeft: Radius.circular(20.w),
-                      bottomRight: Radius.circular(20.w),
-                      bottomLeft: Radius.circular(20.w),
-                    ),
-                  ),
-                  margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                  child: const Center(
-                    child: Text("first pose"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  print("2nd options");
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20.w),
-                      topLeft: Radius.circular(20.w),
-                      bottomRight: Radius.circular(20.w),
-                      bottomLeft: Radius.circular(20.w),
-                    ),
-                  ),
-                  margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                  child: const Center(
-                    child: Text("second pose"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  print("3rd options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrangeAccent,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                    child: const Center(child: Text("third pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.indigoAccent,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                    child: const Center(child: Text("fourth pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                    child: const Center(child: Text("fifth pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                    child: const Center(child: Text("sixth pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.brown,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                    child: const Center(child: Text("seventh pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                    child: const Center(child: Text("eighth pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(20.w, 0, 0, 20.w),
-                    child: const Center(child: Text("ninth pose"))),
-              ),
-              InkWell(
-                onTap: () {
-                  print("4th options");
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.indigoAccent,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.w),
-                            topLeft: Radius.circular(20.w),
-                            bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(20.w))),
-                    margin: EdgeInsets.fromLTRB(0, 0, 20.w, 20.w),
-                    child: const Center(child: Text("tenth pose"))),
-              ),
-            ],
+        body: Padding(
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height / 5.w),
+          child: SizedBox(
+            height: 430.w,
+            child: ScrollSnapList(
+              itemBuilder: _buildListItem,
+              itemCount: poseList.length,
+              itemSize: 268.w,
+              onItemFocus: (index) {
+                //switch(index){
+                // case 1:{
+                //   Fluttertoast.showToast(msg: poseList[index].title,toastLength: Toast.LENGTH_SHORT,);
+                //}
+                //}
+              },
+              dynamicItemSize: true,
+            ),
           ),
         ));
+  }
+
+  Widget _buildListItem(BuildContext context, int index) {
+    PosesDisplay posesDisplay = poseList[index];
+    return GestureDetector(
+      onTap: () {
+        //Fluttertoast.showToast(msg: poseList[index].title,toastLength: Toast.LENGTH_SHORT,);
+        switch (index) {
+          case 0:
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+              );
+            }
+          case 1:
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+              );
+            }
+          case 2:
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+              );
+            }
+          case 3:
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+              );
+            }
+        }
+      },
+      child: SizedBox(
+        width: 250.w,
+        height: 400.w,
+        child: Card(
+          elevation: 12,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            child: Column(
+              children: [
+                Image.asset(
+                  posesDisplay.imagePath,
+                  fit: BoxFit.cover,
+                  width: 240.w,
+                  height: 350.w,
+                ),
+                SizedBox(
+                  height: 15.w,
+                ),
+                Text(
+                  posesDisplay.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.w,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -522,10 +439,7 @@ class LoginPageVIP extends StatelessWidget {
               flex: 10,
               child: Container(
                 color: const Color.fromRGBO(255, 255, 255, 1.0),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,
                 child: Center(
                   child: SvgPicture.asset(
@@ -537,14 +451,8 @@ class LoginPageVIP extends StatelessWidget {
             Expanded(
               flex: 9,
               child: Container(
-                width: ((MediaQuery
-                    .of(context)
-                    .size
-                    .width) - (80.w)),
-                height: (MediaQuery
-                    .of(context)
-                    .size
-                    .height),
+                width: ((MediaQuery.of(context).size.width) - (80.w)),
+                height: (MediaQuery.of(context).size.height),
                 decoration: BoxDecoration(
                     color: const Color.fromRGBO(255, 255, 255, 1.0),
                     borderRadius: BorderRadius.only(
@@ -559,7 +467,7 @@ class LoginPageVIP extends StatelessWidget {
                     children: [
                       Padding(
                         padding:
-                        EdgeInsets.only(bottom: 4.w, top: 20.w, left: 30.w),
+                            EdgeInsets.only(bottom: 4.w, top: 20.w, left: 30.w),
                         child: Text(
                           "Email",
                           style: TextStyle(
@@ -581,7 +489,7 @@ class LoginPageVIP extends StatelessWidget {
                       ),
                       Padding(
                         padding:
-                        EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
+                            EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
                         child: Text(
                           "Password",
                           style: TextStyle(
@@ -612,10 +520,12 @@ class LoginPageVIP extends StatelessWidget {
                                   onPressed: () {
                                     FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                        email: emailController.text.trim(),
-                                        password: passwordController.text
-                                            .trim()).then((value) {
-                                              Fluttertoast.showToast(msg: "Signing successful");
+                                            email: emailController.text.trim(),
+                                            password:
+                                                passwordController.text.trim())
+                                        .then((value) {
+                                      Fluttertoast.showToast(
+                                          msg: "Signing successful");
                                       Navigator.push(
                                           (context),
                                           MaterialPageRoute(
@@ -629,7 +539,7 @@ class LoginPageVIP extends StatelessWidget {
                                   style: ElevatedButton.styleFrom(
                                     elevation: 0,
                                     primary:
-                                    const Color.fromRGBO(19, 154, 157, 1.0),
+                                        const Color.fromRGBO(19, 154, 157, 1.0),
                                     onPrimary: Colors.white,
                                   ),
                                   child: Padding(
@@ -649,8 +559,7 @@ class LoginPageVIP extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 print(
-                                    "Padding value 2: ${EdgeInsets.only(
-                                        top: 10.w)}");
+                                    "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -660,12 +569,12 @@ class LoginPageVIP extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary:
-                                const Color.fromRGBO(19, 154, 157, 1.0),
+                                    const Color.fromRGBO(19, 154, 157, 1.0),
                                 onPrimary: Colors.white,
                               ),
                               child: Padding(
                                 padding:
-                                EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                                    EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
                                 child: Text(
                                   "Back",
                                   style: TextStyle(
@@ -727,7 +636,6 @@ class SignupPageVIP extends StatelessWidget {
   SignupPageVIP({super.key});
 
   TextEditingController emailController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
@@ -742,10 +650,7 @@ class SignupPageVIP extends StatelessWidget {
           child: Column(children: [
             Padding(
               padding: EdgeInsets.only(
-                  top: (MediaQuery
-                      .of(context)
-                      .size
-                      .height) / 7),
+                  top: (MediaQuery.of(context).size.height) / 7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.center,
@@ -762,7 +667,7 @@ class SignupPageVIP extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                    EdgeInsets.only(bottom: 4.w, top: 20.w, left: 30.w),
+                        EdgeInsets.only(bottom: 4.w, top: 20.w, left: 30.w),
                     child: Text(
                       "Email",
                       style: TextStyle(
@@ -780,27 +685,6 @@ class SignupPageVIP extends StatelessWidget {
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Enter the email"),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4.w, top: 4.w, left: 30.w),
-                    child: Text(
-                      "Username",
-                      style: TextStyle(
-                        color: const Color.fromRGBO(85, 38, 25, 1),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.w,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 10.w, top: 4.w, left: 30.w, right: 30.w),
-                    child: TextField(
-                      controller: usernameController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Enter the username"),
                     ),
                   ),
                   Padding(
@@ -854,8 +738,7 @@ class SignupPageVIP extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 print(
-                                    "Padding value 2: ${EdgeInsets.only(
-                                        top: 10.w)}");
+                                    "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -865,12 +748,12 @@ class SignupPageVIP extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary:
-                                const Color.fromRGBO(19, 154, 157, 1.0),
+                                    const Color.fromRGBO(19, 154, 157, 1.0),
                                 onPrimary: Colors.white,
                               ),
                               child: Padding(
                                 padding:
-                                EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                                    EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
                                 child: Text(
                                   "Back",
                                   style: TextStyle(
@@ -883,23 +766,17 @@ class SignupPageVIP extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () async {
                                 String email = emailController.text.trim();
-                                String username =
-                                usernameController.text.trim();
                                 String password =
-                                passwordController.text.trim();
+                                    passwordController.text.trim();
                                 String confirmPassword =
-                                confirmPasswordController.text.trim();
+                                    confirmPasswordController.text.trim();
 
                                 if (email == "" ||
-                                    username == "" ||
                                     password == "" ||
                                     confirmPassword == "") {
                                   if (email == "") {
                                     Fluttertoast.showToast(
                                         msg: 'Email is empty!');
-                                  } else if (username == "") {
-                                    Fluttertoast.showToast(
-                                        msg: 'Username is empty!');
                                   } else if (password == "") {
                                     Fluttertoast.showToast(
                                         msg: 'Password is empty!');
@@ -907,14 +784,14 @@ class SignupPageVIP extends StatelessWidget {
                                 } else if (password.length < 8) {
                                   Fluttertoast.showToast(
                                       msg:
-                                      'Password must contain minimum 8 characters!');
+                                          'Password must contain minimum 8 characters!');
                                 } else if (password != confirmPassword) {
                                   Fluttertoast.showToast(
                                       msg: 'Passwords do not match!');
                                 } else {
                                   FirebaseAuth.instance
                                       .createUserWithEmailAndPassword(
-                                      email: email, password: password)
+                                          email: email, password: password)
                                       .then((value) {
                                     Fluttertoast.showToast(
                                         msg: "success in creating account");
@@ -932,12 +809,12 @@ class SignupPageVIP extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary:
-                                const Color.fromRGBO(19, 154, 157, 1.0),
+                                    const Color.fromRGBO(19, 154, 157, 1.0),
                                 onPrimary: Colors.white,
                               ),
                               child: Padding(
                                 padding:
-                                EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 10.w),
+                                    EdgeInsets.fromLTRB(10.w, 10.w, 10.w, 10.w),
                                 child: Text(
                                   "Next",
                                   style: TextStyle(
@@ -972,7 +849,7 @@ class SignupPageVIP extends StatelessWidget {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color:
-                                    const Color.fromRGBO(19, 154, 157, 1.0),
+                                        const Color.fromRGBO(19, 154, 157, 1.0),
                                     fontSize: 15.w)),
                           )
                         ]),
@@ -1003,20 +880,17 @@ class PaymentPage extends StatelessWidget {
               Fluttertoast.showToast(msg: "Signed out");
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => MyApp2()),
+                MaterialPageRoute(builder: (context) => MyApp2()),
               );
             });
           },
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            primary:
-            const Color.fromRGBO(19, 154, 157, 1.0),
+            primary: const Color.fromRGBO(19, 154, 157, 1.0),
             onPrimary: Colors.white,
           ),
           child: Padding(
-            padding:
-            EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+            padding: EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
             child: Text(
               "Logout",
               style: TextStyle(
@@ -1050,26 +924,26 @@ class GuestPageHome extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(flex:2
-                ,child: Container(
+            Expanded(
+                flex: 2,
+                child: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        stops: [
-                          0.1.w,
-                          0.4.w,
-                          0.6.w,
-                          0.9.w,
-                        ],
-                        colors: const [
-                          Color.fromRGBO(33, 160, 164, 1.0),
-                          Color.fromRGBO(125, 248, 255, 1.0),
-                          Color.fromRGBO(19, 154, 157, 1.0),
-                          Color.fromRGBO(25, 107, 112, 1.0),
-                        ],
-                      )
-                  ),
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [
+                      0.1.w,
+                      0.4.w,
+                      0.6.w,
+                      0.9.w,
+                    ],
+                    colors: const [
+                      Color.fromRGBO(33, 160, 164, 1.0),
+                      Color.fromRGBO(125, 248, 255, 1.0),
+                      Color.fromRGBO(19, 154, 157, 1.0),
+                      Color.fromRGBO(25, 107, 112, 1.0),
+                    ],
+                  )),
                   child: Row(
                     children: [
                       Padding(
@@ -1077,7 +951,7 @@ class GuestPageHome extends StatelessWidget {
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left:7.w),
+                              padding: EdgeInsets.only(left: 7.w),
                               child: Text(
                                 "Hello guest,",
                                 style: TextStyle(
@@ -1088,7 +962,7 @@ class GuestPageHome extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(top:3.w,bottom: 8.w),
+                              padding: EdgeInsets.only(top: 3.w, bottom: 8.w),
                               child: Text(
                                 "Welcome to Craftie",
                                 style: TextStyle(
@@ -1103,9 +977,9 @@ class GuestPageHome extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 75.w, left: 60.w),
-                        child:  InkWell(
+                        child: InkWell(
                           onTap: () {
-                           Fluttertoast.showToast(msg: "Rating button");
+                            Fluttertoast.showToast(msg: "Rating button");
                           },
                           child: Container(
                             width: 40.w,
@@ -1116,14 +990,14 @@ class GuestPageHome extends StatelessWidget {
                             ),
                             child: const Icon(
                               Icons.star_rate_outlined,
-                              color: Color.fromRGBO(255,255,255, 1.0),
+                              color: Color.fromRGBO(255, 255, 255, 1.0),
                             ),
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 75.w, left: 10.w),
-                        child:  InkWell(
+                        child: InkWell(
                           onTap: () {
                             Fluttertoast.showToast(msg: "Share button");
                           },
@@ -1136,7 +1010,7 @@ class GuestPageHome extends StatelessWidget {
                             ),
                             child: const Icon(
                               Icons.share_outlined,
-                             // color: Color.fromRGBO(9, 75, 75, 1.0),
+                              // color: Color.fromRGBO(9, 75, 75, 1.0),
                               color: Color.fromRGBO(253, 253, 253, 1.0),
                             ),
                           ),
@@ -1144,7 +1018,7 @@ class GuestPageHome extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 75.w, left: 10.w),
-                        child:  InkWell(
+                        child: InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -1157,19 +1031,19 @@ class GuestPageHome extends StatelessWidget {
                             height: 40.w,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                             // color: Color.fromRGBO(76, 172, 173, 1.0),
+                              // color: Color.fromRGBO(76, 172, 173, 1.0),
                               color: Color.fromRGBO(9, 88, 89, 1.0),
                             ),
                             child: const Icon(
                               Icons.logout,
-                              color: Color.fromRGBO(255,255,255, 1.0),
+                              color: Color.fromRGBO(255, 255, 255, 1.0),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-            )),
+                )),
             Expanded(
               flex: 4,
               child: Container(
@@ -1182,24 +1056,15 @@ class GuestPageHome extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.only(left: 10.w),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height / 2.6.w,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 2.6.w,
                       child: ListView.builder(
-                        // This next line does the trick.
+                          // This next line does the trick.
                           scrollDirection: Axis.horizontal,
                           itemCount: numbers.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.8.w,
+                              width: MediaQuery.of(context).size.width * 0.8.w,
                               child: Card(
                                 margin: EdgeInsets.only(
                                     left: 5.w, top: 20.w, right: 10.w),
@@ -1207,11 +1072,10 @@ class GuestPageHome extends StatelessWidget {
                                 child: Container(
                                   child: Center(
                                       child: Text(
-                                        numbers[index].toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 36.w),
-                                      )),
+                                    numbers[index].toString(),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 36.w),
+                                  )),
                                 ),
                               ),
                             );
@@ -1226,40 +1090,30 @@ class GuestPageHome extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      stops: [
-                        0.1.w,
-                        0.4.w,
-                        0.6.w,
-                        0.9.w,
-                      ],
-                      colors: const [
-                         Color.fromRGBO(33, 160, 164, 1.0),
-                        Color.fromRGBO(125, 248, 255, 1.0),
-                        Color.fromRGBO(19, 154, 157, 1.0),
-                        Color.fromRGBO(25, 107, 112, 1.0),
-                      ],
-                    )
-                ),
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [
+                    0.1.w,
+                    0.4.w,
+                    0.6.w,
+                    0.9.w,
+                  ],
+                  colors: const [
+                    Color.fromRGBO(33, 160, 164, 1.0),
+                    Color.fromRGBO(125, 248, 255, 1.0),
+                    Color.fromRGBO(19, 154, 157, 1.0),
+                    Color.fromRGBO(25, 107, 112, 1.0),
+                  ],
+                )),
                 padding: EdgeInsets.fromLTRB(30.w, 10.w, 25.w, 0),
                 //color: Colors.blue,
                 //const Color.fromRGBO(33, 160, 164, 1.0),
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height -
-                    (MediaQuery
-                        .of(context)
-                        .size
-                        .height / 1.6.w),
+                height: MediaQuery.of(context).size.height -
+                    (MediaQuery.of(context).size.height / 1.6.w),
                 child: GridView(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount:
-                      MediaQuery
-                          .of(context)
-                          .size
-                          .width < 700 ? 2 : 3,
+                          MediaQuery.of(context).size.width < 700 ? 2 : 3,
                       childAspectRatio: (1.w),
                       mainAxisSpacing: 20.w,
                       crossAxisSpacing: 20.w),
@@ -1276,7 +1130,7 @@ class GuestPageHome extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                             color: Color.fromRGBO(255, 255, 255, 1.0),
-                          //  color: Color.fromRGBO(188, 197, 197, 1.0),
+                            //  color: Color.fromRGBO(188, 197, 197, 1.0),
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20.w),
                                 topLeft: Radius.circular(20.w),
@@ -1287,7 +1141,7 @@ class GuestPageHome extends StatelessWidget {
                           children: [
                             Padding(
                                 padding:
-                                EdgeInsets.only(top: 20.w, bottom: 10.w),
+                                    EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.accessibility_new,
                                   color: Colors.black,
@@ -1295,11 +1149,10 @@ class GuestPageHome extends StatelessWidget {
                                 )),
                             Center(
                                 child: Text(
-                                  "Poses",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.w),
-                                )),
+                              "Poses",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
                           ],
                         ),
                       ),
@@ -1327,7 +1180,7 @@ class GuestPageHome extends StatelessWidget {
                           children: [
                             Padding(
                                 padding:
-                                EdgeInsets.only(top: 20.w, bottom: 10.w),
+                                    EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.account_circle,
                                   color: Colors.black,
@@ -1335,11 +1188,10 @@ class GuestPageHome extends StatelessWidget {
                                 )),
                             Center(
                                 child: Text(
-                                  "Profile",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.w),
-                                )),
+                              "Profile",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.w),
+                            )),
                           ],
                         ),
                       ),
@@ -1355,7 +1207,7 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                           decoration: BoxDecoration(
-                             // color: Color.fromRGBO(188, 197, 197, 1.0),
+                              // color: Color.fromRGBO(188, 197, 197, 1.0),
                               color: Color.fromRGBO(255, 255, 255, 1.0),
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(20.w),
@@ -1367,7 +1219,7 @@ class GuestPageHome extends StatelessWidget {
                             children: [
                               Padding(
                                 padding:
-                                EdgeInsets.only(top: 20.w, bottom: 10.w),
+                                    EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.settings,
                                   color: Colors.black,
@@ -1376,11 +1228,11 @@ class GuestPageHome extends StatelessWidget {
                               ),
                               Center(
                                   child: Text(
-                                    "Settings",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.w),
-                                  )),
+                                "Settings",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
                             ],
                           )),
                     ),
@@ -1407,20 +1259,20 @@ class GuestPageHome extends StatelessWidget {
                             children: [
                               Padding(
                                 padding:
-                                EdgeInsets.only(top: 20.w, bottom: 10.w),
+                                    EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.account_tree_outlined,
                                   color: Colors.black,
-                                  size:40.h,
+                                  size: 40.h,
                                 ),
                               ),
                               Center(
                                   child: Text(
-                                    "About us",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.w),
-                                  )),
+                                "About us",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.w),
+                              )),
                             ],
                           )),
                     ),
@@ -1464,7 +1316,7 @@ class _NavBarPageState extends State<NavBarPage> {
 
   /// widget list
   final List<Widget> bottomBarPages = [
-    const PoseListPage(),
+    PoseListPage(),
     const SettingPage(),
     const ProfilePage(),
     const AboutUs(),
@@ -1482,72 +1334,68 @@ class _NavBarPageState extends State<NavBarPage> {
       extendBody: true,
       bottomNavigationBar: (bottomBarPages.length <= maxCount)
           ? AnimatedNotchBottomBar(
+              /// Provide NotchBottomBarController
+              notchBottomBarController: _controller,
+              color: const Color.fromRGBO(19, 154, 157, 1.0),
+              showLabel: false,
+              notchColor: const Color.fromRGBO(5, 59, 61, 1.0),
 
-        /// Provide NotchBottomBarController
-        notchBottomBarController: _controller,
-        color: const Color.fromRGBO(19, 154, 157, 1.0),
-        showLabel: false,
-        notchColor: const Color.fromRGBO(5, 59, 61, 1.0),
+              /// restart app if you change removeMargins
+              removeMargins: true,
+              bottomBarWidth: MediaQuery.of(context).size.width,
 
-        /// restart app if you change removeMargins
-        removeMargins: true,
-        bottomBarWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
-
-        durationInMilliSeconds: 300,
-        bottomBarItems: const [
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.accessibility_new,
-              color: Colors.white,
-            ),
-            activeItem: Icon(
-              Icons.accessibility_new,
-              color: const Color.fromRGBO(255, 255, 255, 1.0),
-            ),
-            itemLabel: 'Person',
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            activeItem: Icon(
-              Icons.settings,
-              color: const Color.fromRGBO(255, 255, 255, 1.0),
-            ),
-            itemLabel: 'Settings',
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
-            activeItem: Icon(
-              Icons.person,
-              color: const Color.fromRGBO(255, 255, 255, 1.0),
-            ),
-            itemLabel: 'personal',
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.account_tree_outlined,
-              color: Colors.white,
-            ),
-            activeItem: Icon(
-              Icons.account_tree_outlined,
-              color: const Color.fromRGBO(255, 255, 255, 1.0),
-            ),
-            itemLabel: 'Page 5',
-          ),
-        ],
-        onTap: (index) {
-          /// perform action on tab change and to update pages you can update pages without pages
-          _pageController.jumpToPage(index);
-        },
-      )
+              durationInMilliSeconds: 300,
+              bottomBarItems: const [
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.accessibility_new,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.accessibility_new,
+                    color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  ),
+                  itemLabel: 'Person',
+                ),
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.settings,
+                    color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  ),
+                  itemLabel: 'Settings',
+                ),
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.person,
+                    color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  ),
+                  itemLabel: 'personal',
+                ),
+                BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.account_tree_outlined,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.account_tree_outlined,
+                    color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  ),
+                  itemLabel: 'Page 5',
+                ),
+              ],
+              onTap: (index) {
+                /// perform action on tab change and to update pages you can update pages without pages
+                _pageController.jumpToPage(index);
+              },
+            )
           : null,
     );
   }
@@ -1662,10 +1510,7 @@ class _PoseListPageList extends State<PoseListPageList> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.3,
                             margin: EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               image: DecorationImage(
