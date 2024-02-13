@@ -14,6 +14,7 @@ import 'package:pose_detection_app/utils.dart' as utils;
 class CameraView extends StatefulWidget {
   CameraView(
       {Key? key,
+      this.index,
       required this.customPaint,
       required this.onImage,
       required this.posePainter,
@@ -23,6 +24,7 @@ class CameraView extends StatefulWidget {
       this.initialCameraLensDirection = CameraLensDirection.back})
       : super(key: key);
 
+  final int? index;
   final PosePainter? posePainter;
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
@@ -59,6 +61,8 @@ class _CameraViewState extends State<CameraView> {
   PoseLandmark? p2;
   PoseLandmark? p3;
   PoseLandmark? p4;
+
+  //String poseText2='';
 
   @override
   void initState() {
@@ -113,13 +117,12 @@ class _CameraViewState extends State<CameraView> {
             elbowRight != null &&
             shoulderRight != null &&
             hipRight != null &&
-            wristRight !=null &&
-            wristLeft !=null &&
-            kneeRight !=null &&
-            kneeLeft !=null &&
-            ankleRight !=null &&
-            ankleLeft !=null
-        ) {
+            wristRight != null &&
+            wristLeft != null &&
+            kneeRight != null &&
+            kneeLeft != null &&
+            ankleRight != null &&
+            ankleLeft != null) {
           final angleLeftShoulder = utils.angleElbowShoulderHipLeft(
             elbowLeft,
             shoulderLeft,
@@ -178,16 +181,56 @@ class _CameraViewState extends State<CameraView> {
             _angleRightHip = angleRightHip;
             _angleRightKnee = angleRightKnee;
           });
-
-          final poseState = utils.isHandsOnHeadPose(
+           var poseState = utils.isOpenArmPose(
             angleRightShoulder,
-            angleRightElbow,
-            angleRightKnee,
             angleLeftShoulder,
-            angleLeftKnee,
+            angleRightElbow,
+            angleLeftElbow,
             poseDetector.state,
           );
 
+          if (widget.index == 0) {
+             poseState = utils.isOpenArmPose(
+              angleRightShoulder,
+              angleLeftShoulder,
+              angleRightElbow,
+              angleLeftElbow,
+              poseDetector.state,
+            );
+          //    poseText2 = "is open arm";
+          } else if (widget.index == 1) {
+             poseState = utils.isHandsOnHeadPose(
+              angleRightShoulder,
+              angleRightElbow,
+              angleRightKnee,
+              angleLeftShoulder,
+              angleLeftKnee,
+              poseDetector.state,
+            );
+           //  poseText2 = "is hand on head ";
+          } else if (widget.index == 2) {
+             poseState = utils.isDapPose(
+              angleRightShoulder,
+              angleRightElbow,
+              angleRightHip,
+              angleRightKnee,
+              angleLeftShoulder,
+              angleLeftElbow,
+              angleLeftHip,
+              angleLeftKnee,
+              poseDetector.state,
+            );
+            // poseText2 = "is dap pose";
+          } else if (widget.index == 3) {
+             poseState = utils.isHandsOnHipPose(
+              angleRightShoulder,
+              angleLeftShoulder,
+              angleRightElbow,
+              angleLeftElbow,
+              poseDetector.state,
+            );
+             //poseText2 = "is hands on hip";
+          }
 /*
           final poseState = utils.isHandsOnHipPose(
             angleRightShoulder,
@@ -264,7 +307,7 @@ class _CameraViewState extends State<CameraView> {
   Widget _resultsWidget() {
     final bloc = BlocProvider.of<model.PoseDetector>(context);
     String poseText = '';
-        //''+'leftelbow : ${_angleLeftElbow.toStringAsFixed(1)} '+'lefthip : ${_angleLeftHip.toStringAsFixed(1)} '+'leftknee : ${_angleLeftKnee.toStringAsFixed(1)} ';
+    //''+'leftelbow : ${_angleLeftElbow.toStringAsFixed(1)} '+'lefthip : ${_angleLeftHip.toStringAsFixed(1)} '+'leftknee : ${_angleLeftKnee.toStringAsFixed(1)} ';
     bool isPoseCorrect = false;
     // Determine the text to display based on the pose state
     switch (bloc.state) {
@@ -288,7 +331,10 @@ class _CameraViewState extends State<CameraView> {
         'rightknee : ${_angleRightKnee.toStringAsFixed(0)}  \n'+'leftknee: ${_angleLeftKnee.toStringAsFixed(0)}  \n'+poseText;
 
 
-   // String poseText2='rightShoulder : ${_angleRightSholuderLeftHip.toStringAsFixed(0)} \n'+'leftShoulder : ${_angleLeftShoulderRightHip.toStringAsFixed(0)} \n';
+
+
+
+    // String poseText2='rightShoulder : ${_angleRightSholuderLeftHip.toStringAsFixed(0)} \n'+'leftShoulder : ${_angleLeftShoulderRightHip.toStringAsFixed(0)} \n';
     return Positioned(
       left: 0,
       top: 80.w,
@@ -308,7 +354,7 @@ class _CameraViewState extends State<CameraView> {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Text(
-                poseText2 ,
+                poseText2,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: isPoseCorrect ? Colors.white : Colors.red,

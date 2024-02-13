@@ -13,6 +13,7 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
+
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
@@ -43,10 +44,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
+    int? index=ModalRoute.of(context)?.settings.arguments as int?;
     return ScreenUtilInit(
       minTextAdapt: true,
       child: _showWidget
           ? DetectorView(
+              index:index,
               posePainter: _posePainter,
               title: 'Pose Detector',
               customPaint: _customPaint,

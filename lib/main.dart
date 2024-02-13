@@ -147,6 +147,7 @@ class _MyAppState extends State<MyApp2> {
         splitScreenMode: true,
         builder: (_, child) {
           return Scaffold(
+            backgroundColor:const Color.fromRGBO(255, 255, 255, 1.0) ,
             body: Column(
               children: [
                 Expanded(
@@ -359,28 +360,33 @@ class PoseListPage extends StatelessWidget {
             {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+                MaterialPageRoute(builder: (context) => PoseDetectorView(),
+                  settings: RouteSettings(arguments: index),
+                ),
               );
             }
           case 1:
             {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+                MaterialPageRoute(builder: (context) => PoseDetectorView(),
+                  settings: RouteSettings(arguments: index),),
               );
             }
           case 2:
             {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+                MaterialPageRoute(builder: (context) => PoseDetectorView(),
+                  settings: RouteSettings(arguments: index),),
               );
             }
           case 3:
             {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PoseDetectorView()),
+                MaterialPageRoute(builder: (context) => PoseDetectorView(),
+                  settings: RouteSettings(arguments: index),),
               );
             }
         }

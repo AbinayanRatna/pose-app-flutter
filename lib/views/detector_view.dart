@@ -11,6 +11,7 @@ enum DetectorViewMode { liveFeed, gallery }
 class DetectorView extends StatefulWidget {
   DetectorView({
     Key? key,
+    this.index,
     required this.posePainter,
     required this.title,
     required this.onImage,
@@ -23,6 +24,7 @@ class DetectorView extends StatefulWidget {
     this.onCameraLensDirectionChanged,
   }) : super(key: key);
 
+  final int? index;
   final PosePainter? posePainter;
   final String title;
   final CustomPaint? customPaint;
@@ -51,7 +53,8 @@ class _DetectorViewState extends State<DetectorView> {
   Widget build(BuildContext context) {
     return _mode == DetectorViewMode.liveFeed
         ? CameraView(
-    posePainter: widget.posePainter,
+            index:widget.index,
+            posePainter: widget.posePainter,
             customPaint: widget.customPaint,
             onImage: widget.onImage,
             onCameraFeedReady: widget.onCameraFeedReady,
