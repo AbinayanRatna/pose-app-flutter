@@ -143,7 +143,6 @@ class _MyAppState extends State<MyApp2> {
         splitScreenMode: true,
         builder: (_, child) {
           return Scaffold(
-            backgroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
             body: Column(
               children: [
                 Expanded(
@@ -1047,51 +1046,140 @@ class GuestPageHome extends StatelessWidget {
     return ScreenUtilInit(
       minTextAdapt: true,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Welcome Home"),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyApp()),
-                  );
-                },
-                icon: const Icon(Icons.logout))
-          ],
-          backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
-          automaticallyImplyLeading: false,
-        ),
         backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Expanded(flex:2
+                ,child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        stops: [
+                          0.1.w,
+                          0.4.w,
+                          0.6.w,
+                          0.9.w,
+                        ],
+                        colors: const [
+                          Color.fromRGBO(33, 160, 164, 1.0),
+                          Color.fromRGBO(125, 248, 255, 1.0),
+                          Color.fromRGBO(19, 154, 157, 1.0),
+                          Color.fromRGBO(25, 107, 112, 1.0),
+                        ],
+                      )
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 85.w, left: 20.w),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left:7.w),
+                              child: Text(
+                                "Hello guest,",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.w,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(top:3.w,bottom: 8.w),
+                              child: Text(
+                                "Welcome to Craftie",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11.w,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 75.w, left: 60.w),
+                        child:  InkWell(
+                          onTap: () {
+                           Fluttertoast.showToast(msg: "Rating button");
+                          },
+                          child: Container(
+                            width: 40.w,
+                            height: 40.w,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color.fromRGBO(9, 88, 89, 1.0),
+                            ),
+                            child: const Icon(
+                              Icons.star_rate_outlined,
+                              color: Color.fromRGBO(255,255,255, 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 75.w, left: 10.w),
+                        child:  InkWell(
+                          onTap: () {
+                            Fluttertoast.showToast(msg: "Share button");
+                          },
+                          child: Container(
+                            width: 40.w,
+                            height: 40.w,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color.fromRGBO(9, 88, 89, 1.0),
+                            ),
+                            child: const Icon(
+                              Icons.share_outlined,
+                             // color: Color.fromRGBO(9, 75, 75, 1.0),
+                              color: Color.fromRGBO(253, 253, 253, 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 75.w, left: 10.w),
+                        child:  InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyApp()),
+                            );
+                          },
+                          child: Container(
+                            width: 40.w,
+                            height: 40.w,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                             // color: Color.fromRGBO(76, 172, 173, 1.0),
+                              color: Color.fromRGBO(9, 88, 89, 1.0),
+                            ),
+                            child: const Icon(
+                              Icons.logout,
+                              color: Color.fromRGBO(255,255,255, 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+            )),
             Expanded(
-              flex: 5,
+              flex: 4,
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(255, 255, 255, 1.0),
-                  borderRadius: BorderRadius.only(
-                    //bottomLeft: Radius.circular(20.w),
-                    bottomRight: Radius.circular(60.w),
-                    bottomLeft: Radius.circular(60.w),
-                  ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 30.w, left: 20.w),
-                      child: Text(
-                        "Hello (Username),",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.w,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
                     Container(
                       padding: EdgeInsets.only(left: 10.w),
                       width: MediaQuery
@@ -1101,7 +1189,7 @@ class GuestPageHome extends StatelessWidget {
                       height: MediaQuery
                           .of(context)
                           .size
-                          .height / 2.5.w,
+                          .height / 2.6.w,
                       child: ListView.builder(
                         // This next line does the trick.
                           scrollDirection: Axis.horizontal,
@@ -1114,7 +1202,7 @@ class GuestPageHome extends StatelessWidget {
                                   .width * 0.8.w,
                               child: Card(
                                 margin: EdgeInsets.only(
-                                    left: 5.w, top: 40.w, right: 10.w),
+                                    left: 5.w, top: 20.w, right: 10.w),
                                 color: Colors.blue,
                                 child: Container(
                                   child: Center(
@@ -1134,10 +1222,29 @@ class GuestPageHome extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Container(
-                padding: EdgeInsets.fromLTRB(20.w, 40.w, 20.w, 0),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: [
+                        0.1.w,
+                        0.4.w,
+                        0.6.w,
+                        0.9.w,
+                      ],
+                      colors: const [
+                         Color.fromRGBO(33, 160, 164, 1.0),
+                        Color.fromRGBO(125, 248, 255, 1.0),
+                        Color.fromRGBO(19, 154, 157, 1.0),
+                        Color.fromRGBO(25, 107, 112, 1.0),
+                      ],
+                    )
+                ),
+                padding: EdgeInsets.fromLTRB(30.w, 10.w, 25.w, 0),
                 //color: Colors.blue,
+                //const Color.fromRGBO(33, 160, 164, 1.0),
                 height: MediaQuery
                     .of(context)
                     .size
@@ -1152,10 +1259,10 @@ class GuestPageHome extends StatelessWidget {
                       MediaQuery
                           .of(context)
                           .size
-                          .width < 700 ? 3 : 3,
+                          .width < 700 ? 2 : 3,
                       childAspectRatio: (1.w),
-                      mainAxisSpacing: 30.w,
-                      crossAxisSpacing: 30.w),
+                      mainAxisSpacing: 20.w,
+                      crossAxisSpacing: 20.w),
                   children: [
                     InkWell(
                       onTap: () {
@@ -1168,7 +1275,8 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(188, 197, 197, 1.0),
+                            color: Color.fromRGBO(255, 255, 255, 1.0),
+                          //  color: Color.fromRGBO(188, 197, 197, 1.0),
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20.w),
                                 topLeft: Radius.circular(20.w),
@@ -1179,10 +1287,11 @@ class GuestPageHome extends StatelessWidget {
                           children: [
                             Padding(
                                 padding:
-                                EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.accessibility_new,
                                   color: Colors.black,
+                                  size: 45.h,
                                 )),
                             Center(
                                 child: Text(
@@ -1206,7 +1315,8 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(188, 197, 197, 1.0),
+                            color: Color.fromRGBO(255, 255, 255, 1.0),
+                            //color: Color.fromRGBO(188, 197, 197, 1.0),
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20.w),
                                 topLeft: Radius.circular(20.w),
@@ -1217,10 +1327,11 @@ class GuestPageHome extends StatelessWidget {
                           children: [
                             Padding(
                                 padding:
-                                EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.account_circle,
                                   color: Colors.black,
+                                  size: 45.h,
                                 )),
                             Center(
                                 child: Text(
@@ -1244,7 +1355,8 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                           decoration: BoxDecoration(
-                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                             // color: Color.fromRGBO(188, 197, 197, 1.0),
+                              color: Color.fromRGBO(255, 255, 255, 1.0),
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(20.w),
                                   topLeft: Radius.circular(20.w),
@@ -1255,10 +1367,11 @@ class GuestPageHome extends StatelessWidget {
                             children: [
                               Padding(
                                 padding:
-                                EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.settings,
                                   color: Colors.black,
+                                  size: 40.h,
                                 ),
                               ),
                               Center(
@@ -1282,7 +1395,8 @@ class GuestPageHome extends StatelessWidget {
                       },
                       child: Container(
                           decoration: BoxDecoration(
-                              color: Color.fromRGBO(188, 197, 197, 1.0),
+                              color: Color.fromRGBO(255, 255, 255, 1.0),
+                              //color: Color.fromRGBO(188, 197, 197, 1.0),
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(20.w),
                                   topLeft: Radius.circular(20.w),
@@ -1293,95 +1407,16 @@ class GuestPageHome extends StatelessWidget {
                             children: [
                               Padding(
                                 padding:
-                                EdgeInsets.only(top: 10.w, bottom: 10.w),
+                                EdgeInsets.only(top: 20.w, bottom: 10.w),
                                 child: Icon(
                                   Icons.account_tree_outlined,
                                   color: Colors.black,
+                                  size:40.h,
                                 ),
                               ),
                               Center(
                                   child: Text(
                                     "About us",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.w),
-                                  )),
-                            ],
-                          )),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        print("5rd options: Share");
-                        /*
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
-                        );
-
-                         */
-                      },
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(188, 197, 197, 1.0),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.w),
-                                  topLeft: Radius.circular(20.w),
-                                  bottomRight: Radius.circular(20.w),
-                                  bottomLeft: Radius.circular(20.w))),
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                EdgeInsets.only(top: 10.w, bottom: 10.w),
-                                child: Icon(
-                                  Icons.share_outlined,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Center(
-                                  child: Text(
-                                    "Share us",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.w),
-                                  )),
-                            ],
-                          )),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        print("6rd options: Rateus");
-                        /*
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NavBarPage(currentTab: 1)),
-                        );
-
-                         */
-                      },
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(188, 197, 197, 1.0),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.w),
-                                  topLeft: Radius.circular(20.w),
-                                  bottomRight: Radius.circular(20.w),
-                                  bottomLeft: Radius.circular(20.w))),
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                EdgeInsets.only(top: 10.w, bottom: 10.w),
-                                child: Icon(
-                                  Icons.star_rate_outlined,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Center(
-                                  child: Text(
-                                    "Rate us",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.w),
