@@ -225,10 +225,8 @@ PoseState isHandsOnHipPose(
   final threshold = 10.0; // Adjust this threshold as needed
 
   if (current == PoseState.neutral &&
-      (rightShoulderAngle > (55 - threshold) &&
-          rightShoulderAngle < (55 + threshold)) &&
-      (leftShoulderAngle > (55 - threshold) &&
-          leftShoulderAngle < (55 + threshold)) &&
+      (rightShoulderAngle > (55 - threshold) && rightShoulderAngle < (55 + threshold)) &&
+      (leftShoulderAngle > (55 - threshold) &&  leftShoulderAngle < (55 + threshold)) &&
       (leftElbowAngle >(100-threshold) && leftElbowAngle <(100+threshold)) &&
       (rightElbowAngle >(100-threshold) && rightElbowAngle <(100+threshold))
   ) {
@@ -254,7 +252,7 @@ PoseState isOpenArmPose(
     double leftElbowAngle,
     PoseState current,
     ) {
-  final threshold = 10.0; // Adjust this threshold as needed
+  final threshold = 30.0; // Adjust this threshold as needed
 
   if (current == PoseState.neutral &&
       (rightShoulderAngle > (48 - threshold) &&

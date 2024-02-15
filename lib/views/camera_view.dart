@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart' as model;
@@ -56,11 +58,20 @@ class _CameraViewState extends State<CameraView> {
   double _angleRightElbow = 0.0;
   double _angleRightHip = 0.0;
   double _angleRightKnee = 0.0;
+  String poseTextFinal = "";
 
   PoseLandmark? p1;
   PoseLandmark? p2;
   PoseLandmark? p3;
   PoseLandmark? p4;
+
+  //FlutterTts flutterTts = FlutterTts();
+
+  late FlutterTts flutterTts;
+  String speechBubbleText = '';
+  String speechBubbleTextAdd = 'Bonjour. Joue avec moi !';
+  List<Widget> actions = [];
+  bool alreadyDelayed = false;
 
   //String poseText2='';
 
@@ -69,6 +80,14 @@ class _CameraViewState extends State<CameraView> {
     super.initState();
 
     _initialize();
+    initTts();
+  }
+
+  initTts() async {
+    flutterTts = FlutterTts();
+
+    await flutterTts.awaitSpeakCompletion(true);
+    await speakFeedback();
   }
 
   void _initialize() async {
@@ -171,6 +190,165 @@ class _CameraViewState extends State<CameraView> {
             shoulderRight,
           );
 
+          // bool right_ShoulderCorrect=false,left_ShoulderCorrect=false,right_ElbowCorrect=false,left_ElbowCorrect=false;
+          final bloc = BlocProvider.of<model.PoseDetector>(context);
+
+          //Timer.periodic(Duration(seconds: 2), (timer) {
+
+          // });
+          void speakText(String text) async {
+            await flutterTts.speak(text);
+          }
+
+          void stopSpeaking() async {
+            await flutterTts.stop();
+          }
+
+          String poseText3 = "";
+
+          if (widget.index == 0) {
+            if (_angleRightShoulder <= 28 || _angleRightShoulder >= 68) {
+              if (_angleRightShoulder <= 28) {
+                poseText3 = "Increase the interior angle at right shoulder";
+              } else if (_angleRightShoulder >= 68) {
+                poseText3 = "Decrease the interior angle at right shoulder";
+              }
+            } else if (_angleLeftShoulder <= 28 || _angleLeftShoulder >= 68) {
+              if (_angleLeftShoulder <= 28) {
+                poseText3 = "Increase the interior angle at left shoulder";
+              } else if (_angleLeftShoulder >= 68) {
+                poseText3 = "Decrease the interior angle at left shoulder";
+              }
+            } else if (_angleRightElbow <= 90 || _angleRightElbow >= 130) {
+              if (_angleRightElbow <= 90) {
+                poseText3 = "Increase the interior angle at right elbow";
+              } else if (_angleRightElbow >= 130) {
+                poseText3 = "Decrease the interior angle at right elbow";
+              }
+            } else if (_angleLeftElbow <= 230 || _angleLeftElbow >= 270) {
+              if (_angleLeftElbow <= 230) {
+                poseText3 = "Decrease the interior angle at left elbow";
+              } else if (_angleLeftElbow >= 270) {
+                poseText3 = "Increase the interior angle at left elbow";
+              }
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
+            }
+          }
+          else if (widget.index == 1) {
+            if (_angleRightShoulder <= 120 || _angleRightShoulder >= 150) {
+              if (_angleRightShoulder <= 120) {
+                poseText3 = "Increase the interior angle at right shoulder";
+              } else if (_angleRightShoulder >= 150) {
+                poseText3 = "Decrease the interior angle at right shoulder";
+              }
+            } else if (_angleLeftShoulder <= 10 || _angleLeftShoulder >= 40) {
+              if (_angleLeftShoulder <= 10) {
+                poseText3 = "Increase the interior angle at left shoulder";
+              } else if (_angleLeftShoulder >= 40) {
+                poseText3 = "Decrease the interior angle at left shoulder";
+              }
+            } else if (_angleRightKnee <= 195 || _angleRightKnee >= 225) {
+              if (_angleRightKnee <= 195) {
+                poseText3 = "Increase the interior angle at right knee";
+              } else if (_angleRightKnee >= 225) {
+                poseText3 = "Decrease the interior angle at right knee";
+              }
+            } else if (_angleLeftKnee <= 165 || _angleLeftKnee >= 195) {
+              if (_angleLeftKnee <= 165) {
+                poseText3 = "Decrease the interior angle at left knee";
+              } else if (_angleLeftKnee >= 195) {
+                poseText3 = "Increase the interior angle at left knee";
+              }
+            }else if(bloc.state==model.PoseState.correct){
+              poseText3="Correct pose";
+            }
+          }
+          else if (widget.index == 2) {
+            if (_angleRightShoulder <= 70 || _angleRightShoulder >= 110) {
+              if (_angleRightShoulder <= 70) {
+                poseText3 = "Increase the interior angle at right shoulder";
+              } else if (_angleRightShoulder >= 110) {
+                poseText3 = "Decrease the interior angle at right shoulder";
+              }
+            } else if (_angleRightHip <= 175 || _angleRightHip >= 215) {
+              if (_angleRightHip <= 175) {
+                poseText3 = "Increase the interior angle at right hip";
+              } else if (_angleRightHip >= 215) {
+                poseText3 = "Decrease the interior angle at right hip";
+              }
+            } else if (_angleRightKnee <= 130 || _angleRightKnee >= 170) {
+              if (_angleRightKnee <= 130) {
+                poseText3 = "Increase the interior angle at right knee";
+              } else if (_angleRightKnee >= 170) {
+                poseText3 = "Decrease the interior angle at right knee";
+              }
+            } else if (_angleRightElbow <= 160 || _angleRightElbow >= 200) {
+              if (_angleRightElbow <= 160) {
+                poseText3 = "Increase the interior angle at right elbow";
+              } else if (_angleRightElbow >= 200) {
+                poseText3 = "Decrease the interior angle at right elbow";
+              }
+            } else if (_angleLeftShoulder <= 110 || _angleLeftShoulder >= 150) {
+              if (_angleLeftShoulder <= 110) {
+                poseText3 = "Increase the interior angle at left shoulder";
+              } else if (_angleLeftShoulder >= 150) {
+                poseText3 = "Decrease the interior angle at left shoulder";
+              }
+            } else if (_angleLeftHip <= 85 || _angleLeftHip >= 125) {
+              if (_angleLeftHip <= 85) {
+                poseText3 = "Increase the interior angle at left hip";
+              } else if (_angleLeftHip >= 125) {
+                poseText3 = "Decrease the interior angle at left hip";
+              }
+            } else if (_angleLeftKnee <= 190 || _angleLeftKnee >= 230) {
+              if (_angleLeftKnee <= 190) {
+                poseText3 = "Increase the interior angle at left knee";
+              } else if (_angleLeftKnee >= 230) {
+                poseText3 = "Decrease the interior angle at left knee";
+              }
+            } else if (_angleLeftElbow <= 310 || _angleLeftElbow >= 350) {
+              if (_angleLeftElbow <= 165) {
+                poseText3 = "Increase the interior angle at left elbow";
+              } else if (_angleLeftElbow >= 195) {
+                poseText3 = "Decrease the interior angle at left elbow";
+              }
+            }else if(bloc.state==model.PoseState.correct){
+              poseText3="Correct pose";
+            }
+          }
+          else if (widget.index == 3) {
+            if (_angleRightShoulder <= 45 || _angleRightShoulder >= 65) {
+              if (_angleRightShoulder <= 45) {
+                poseText3 = "Increase the interior angle at right shoulder";
+              } else if (_angleRightShoulder >= 65) {
+                poseText3 = "Decrease the interior angle at right shoulder";
+              }
+            } else if (_angleLeftShoulder <= 45 || _angleLeftShoulder >= 65) {
+              if (_angleLeftShoulder <= 45) {
+                poseText3 = "Increase the interior angle at left shoulder";
+              } else if (_angleLeftShoulder >= 65) {
+                poseText3 = "Decrease the interior angle at left shoulder";
+              }
+            } else if (_angleLeftElbow <= 90 || _angleLeftElbow >= 110) {
+              if (_angleLeftElbow <= 90) {
+                poseText3 = "Increase the interior angle at left elbow";
+              } else if (_angleLeftElbow >= 110) {
+                poseText3 = "Decrease the interior angle at left elbow";
+              }
+            } else if (_angleRightElbow <= 90 || _angleRightElbow >= 110) {
+              if (_angleRightElbow <= 90) {
+                poseText3 = "Increase the interior angle at right elbow";
+              } else if (_angleRightElbow >= 110) {
+                poseText3 = "Decrease the interior angle at right elbow";
+              }
+            }else if(bloc.state==model.PoseState.correct){
+              poseText3="Correct pose";
+            }
+          }
+
+          speechBubbleTextAdd = poseText3;
+
           setState(() {
             _angleLeftShoulder = angleLeftShoulder;
             _angleLeftElbow = angleLeftElbow;
@@ -180,8 +358,11 @@ class _CameraViewState extends State<CameraView> {
             _angleRightElbow = angleRightElbow;
             _angleRightHip = angleRightHip;
             _angleRightKnee = angleRightKnee;
+            poseTextFinal = poseText3;
+            //speakText(poseTextFinal);
           });
-           var poseState = utils.isOpenArmPose(
+
+          var poseState = utils.isOpenArmPose(
             angleRightShoulder,
             angleLeftShoulder,
             angleRightElbow,
@@ -190,16 +371,16 @@ class _CameraViewState extends State<CameraView> {
           );
 
           if (widget.index == 0) {
-             poseState = utils.isOpenArmPose(
+            poseState = utils.isOpenArmPose(
               angleRightShoulder,
               angleLeftShoulder,
               angleRightElbow,
               angleLeftElbow,
               poseDetector.state,
             );
-          //    poseText2 = "is open arm";
+            //    poseText2 = "is open arm";
           } else if (widget.index == 1) {
-             poseState = utils.isHandsOnHeadPose(
+            poseState = utils.isHandsOnHeadPose(
               angleRightShoulder,
               angleRightElbow,
               angleRightKnee,
@@ -207,9 +388,9 @@ class _CameraViewState extends State<CameraView> {
               angleLeftKnee,
               poseDetector.state,
             );
-           //  poseText2 = "is hand on head ";
+            //  poseText2 = "is hand on head ";
           } else if (widget.index == 2) {
-             poseState = utils.isDapPose(
+            poseState = utils.isDapPose(
               angleRightShoulder,
               angleRightElbow,
               angleRightHip,
@@ -222,14 +403,14 @@ class _CameraViewState extends State<CameraView> {
             );
             // poseText2 = "is dap pose";
           } else if (widget.index == 3) {
-             poseState = utils.isHandsOnHipPose(
+            poseState = utils.isHandsOnHipPose(
               angleRightShoulder,
               angleLeftShoulder,
               angleRightElbow,
               angleLeftElbow,
               poseDetector.state,
             );
-             //poseText2 = "is hands on hip";
+            //poseText2 = "is hands on hip";
           }
 /*
           final poseState = utils.isHandsOnHipPose(
@@ -325,14 +506,25 @@ class _CameraViewState extends State<CameraView> {
       // Add other cases if needed for different states
     }
 
-    String poseText2 = 'rightShoulder : ${_angleRightShoulder.toStringAsFixed(0)} \n'+'leftShoulder : ${_angleLeftShoulder.toStringAsFixed(0)} \n'+
-        'rightelbow : ${_angleRightElbow.toStringAsFixed(0)} \n'+'leftelbow : ${_angleLeftElbow.toStringAsFixed(0)}  \n'+
-        'leftelHip : ${_angleLeftHip.toStringAsFixed(0)}  \n'+'righthip : ${_angleRightHip.toStringAsFixed(0)}  \n'+
-        'rightknee : ${_angleRightKnee.toStringAsFixed(0)}  \n'+'leftknee: ${_angleLeftKnee.toStringAsFixed(0)}  \n'+poseText;
-
-
-
-
+    String poseText2 =
+        'rightShoulder : ${_angleRightShoulder.toStringAsFixed(0)} \n' +
+            'leftShoulder : ${_angleLeftShoulder.toStringAsFixed(0)} \n' +
+            'rightelbow : ${_angleRightElbow.toStringAsFixed(0)} \n' +
+            'leftelbow : ${_angleLeftElbow.toStringAsFixed(0)}  \n' +
+            'leftelHip : ${_angleLeftHip.toStringAsFixed(0)}  \n' +
+            'righthip : ${_angleRightHip.toStringAsFixed(0)}  \n' +
+            'rightknee : ${_angleRightKnee.toStringAsFixed(0)}  \n' +
+            'leftknee: ${_angleLeftKnee.toStringAsFixed(0)}  \n' +
+            poseText;
+    /*
+   poseState = utils.isOpenArmPose(
+              angleRightShoulder,
+              angleLeftShoulder,
+              angleRightElbow,
+              angleLeftElbow,
+              poseDetector.state,
+            );
+    */
 
     // String poseText2='rightShoulder : ${_angleRightSholuderLeftHip.toStringAsFixed(0)} \n'+'leftShoulder : ${_angleLeftShoulderRightHip.toStringAsFixed(0)} \n';
     return Positioned(
@@ -354,7 +546,7 @@ class _CameraViewState extends State<CameraView> {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Text(
-                poseText2,
+                poseTextFinal,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: isPoseCorrect ? Colors.white : Colors.red,
@@ -679,6 +871,21 @@ class _CameraViewState extends State<CameraView> {
     } on CameraException catch (e) {
       debugPrint('Error occured while taking picture: $e');
       return null;
+    }
+  }
+
+  Future<void> speakFeedback() async {
+    bool isPoseCorrect = false;
+    while (!isPoseCorrect) {
+      if (speechBubbleTextAdd == "Correct pose") {
+        isPoseCorrect = true;
+      }
+      setState(() {
+        speechBubbleText = speechBubbleTextAdd;
+        actions = [];
+        actions.add(Text('test'));
+      });
+      await flutterTts.speak(speechBubbleText);
     }
   }
 }

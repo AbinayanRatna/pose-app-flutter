@@ -35,6 +35,7 @@ dependencies:
   firebase_auth: ^4.16.0
   fluttertoast: ^8.2.4
   scroll_snap_list: ^0.9.1
+  flutter_tts: ^3.8.5
 
 
 dev_dependencies:
