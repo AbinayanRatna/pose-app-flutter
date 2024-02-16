@@ -13,8 +13,8 @@ import 'package:pose_detection_app/models/pose_one_model.dart' as model;
 import 'package:pose_detection_app/painters/pose_painter.dart';
 import 'package:pose_detection_app/utils.dart' as utils;
 
-class CameraView extends StatefulWidget {
-  CameraView(
+class CameraViewVip extends StatefulWidget {
+  CameraViewVip(
       {Key? key,
       this.index,
       required this.customPaint,
@@ -36,10 +36,10 @@ class CameraView extends StatefulWidget {
   final CameraLensDirection initialCameraLensDirection;
 
   @override
-  State<CameraView> createState() => _CameraViewState();
+  State<CameraViewVip> createState() => _CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class _CameraViewState extends State<CameraViewVip> {
   static List<CameraDescription> _cameras = [];
   CameraController? _controller;
   int _cameraIndex = -1;
@@ -50,6 +50,7 @@ class _CameraViewState extends State<CameraView> {
   double _maxAvailableExposureOffset = 0.0;
   double _currentExposureOffset = 0.0;
   bool _changingCameraLens = false;
+  bool _voiceEnable = false;
   double _angleLeftShoulder = 0.0;
   double _angleLeftElbow = 0.0;
   double _angleLeftHip = 0.0;
@@ -80,8 +81,15 @@ class _CameraViewState extends State<CameraView> {
     super.initState();
 
     _initialize();
+    initTts();
   }
 
+  initTts() async {
+    flutterTts = FlutterTts();
+
+    await flutterTts.awaitSpeakCompletion(true);
+    await speakFeedback();
+  }
 
   void _initialize() async {
     if (_cameras.isEmpty) {
@@ -99,7 +107,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   @override
-  void didUpdateWidget(covariant CameraView oldWidget) {
+  void didUpdateWidget(covariant CameraViewVip oldWidget) {
     if (widget.customPaint != oldWidget.customPaint) {
       if (widget.customPaint == null) return;
       final poseDetector = BlocProvider.of<model.PoseDetector>(context);
@@ -253,8 +261,8 @@ class _CameraViewState extends State<CameraView> {
               } else if (_angleLeftKnee >= 195) {
                 poseText3 = "Increase the interior angle at left knee";
               }
-            }else if(bloc.state==model.PoseState.correct){
-              poseText3="Correct pose";
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
             }
           }
           else if (widget.index == 2) {
@@ -306,8 +314,8 @@ class _CameraViewState extends State<CameraView> {
               } else if (_angleLeftElbow >= 195) {
                 poseText3 = "Decrease the interior angle at left elbow";
               }
-            }else if(bloc.state==model.PoseState.correct){
-              poseText3="Correct pose";
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
             }
           }
           else if (widget.index == 3) {
@@ -335,8 +343,8 @@ class _CameraViewState extends State<CameraView> {
               } else if (_angleRightElbow >= 110) {
                 poseText3 = "Decrease the interior angle at right elbow";
               }
-            }else if(bloc.state==model.PoseState.correct){
-              poseText3="Correct pose";
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
             }
           }
 
@@ -460,18 +468,19 @@ class _CameraViewState extends State<CameraView> {
             Center(
               child: _changingCameraLens
                   ? Center(
-                      child: const Text('Changing camera lens'),
-                    )
+                child: const Text('Changing camera lens'),
+              )
                   : CameraPreview(
-                      _controller!,
-                      child: widget.customPaint,
-                    ),
+                _controller!,
+                child: widget.customPaint,
+              ),
             ),
             _resultsWidget(),
             _takePicture(),
             _switchLiveCameraToggle(),
             _zoomControl(),
             _exposureControl(),
+            _muteVoiceFeedback()
           ],
         ),
       ),
@@ -496,7 +505,7 @@ class _CameraViewState extends State<CameraView> {
       case model.PoseState.neutral:
         poseText = 'neutral Pose';
         break;
-      // Add other cases if needed for different states
+    // Add other cases if needed for different states
     }
 
     String poseText2 =
@@ -554,32 +563,13 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  /*
-  Widget _backButton() => Positioned(
-        top: 40,
-        left: 8,
-        child: SizedBox(
-          height: 50.0,
-          width: 50.0,
-          child: FloatingActionButton(
-            heroTag: Object(),
-            onPressed: () {
-              BlocProvider.of<model.PoseDetector>(context).reset();
-              Navigator.of(context).pop();
-            },
-            backgroundColor: Colors.black54,
-            child: Icon(
-              Icons.arrow_back_ios_outlined,
-              size: 20,
-            ),
-          ),
-        ),
-      );
-
-   */
-  Widget _takePicture() => Positioned(
+  Widget _takePicture() =>
+      Positioned(
         bottom: 10.w,
-        left: MediaQuery.of(context).size.width / 2.w,
+        left: MediaQuery
+            .of(context)
+            .size
+            .width / 2.w,
         child: SizedBox(
           height: 50.0.w,
           width: 50.0.w,
@@ -595,7 +585,8 @@ class _CameraViewState extends State<CameraView> {
         ),
       );
 
-  Widget _switchLiveCameraToggle() => Positioned(
+  Widget _switchLiveCameraToggle() =>
+      Positioned(
         bottom: 10.w,
         right: 30.w,
         child: SizedBox(
@@ -615,7 +606,29 @@ class _CameraViewState extends State<CameraView> {
         ),
       );
 
-  Widget _zoomControl() => Positioned(
+  Widget _muteVoiceFeedback() =>
+      Positioned(
+        bottom: 10.w,
+        left: 30.w,
+        child: SizedBox(
+          height: 50.0.w,
+          width: 50.0.w,
+          child: FloatingActionButton(
+            heroTag: Object(),
+            onPressed: _voiceEnableFunction,
+            backgroundColor: (_voiceEnable)?Colors.white:Colors.black54,
+            child: Icon(
+              Platform.isIOS
+                  ? Icons.keyboard_voice
+                  : Icons.keyboard_voice,
+              size: 35.w,color:(_voiceEnable)?Colors.black:Colors.white ,
+            ),
+          ),
+        ),
+      );
+
+  Widget _zoomControl() =>
+      Positioned(
         bottom: 90.w,
         left: 0,
         right: 0,
@@ -664,7 +677,8 @@ class _CameraViewState extends State<CameraView> {
         ),
       );
 
-  Widget _exposureControl() => Positioned(
+  Widget _exposureControl() =>
+      Positioned(
         top: 40,
         right: 8,
         child: ConstrainedBox(
@@ -769,6 +783,16 @@ class _CameraViewState extends State<CameraView> {
     setState(() => _changingCameraLens = false);
   }
 
+  void _voiceEnableFunction() {
+    setState(() {
+      print("test 1:" + _voiceEnable.toString());
+      _voiceEnable = !_voiceEnable;
+    });
+    if (_voiceEnable) {
+      speakFeedback(); // Restart speaking if voice is re-enabled
+    }
+  }
+
   void _processCameraImage(CameraImage image) {
     final inputImage = _inputImageFromCameraImage(image);
     if (inputImage == null) return;
@@ -798,7 +822,7 @@ class _CameraViewState extends State<CameraView> {
       rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
     } else if (Platform.isAndroid) {
       var rotationCompensation =
-          _orientations[_controller!.value.deviceOrientation];
+      _orientations[_controller!.value.deviceOrientation];
       if (rotationCompensation == null) return null;
       if (camera.lensDirection == CameraLensDirection.front) {
         // front-facing
@@ -851,14 +875,17 @@ class _CameraViewState extends State<CameraView> {
       await (_controller!).setFlashMode(FlashMode.off);
       XFile picture = await (_controller!).takePicture();
       File imageFile = File(picture!.path);
-      int currentUnix = DateTime.now().millisecondsSinceEpoch;
+      int currentUnix = DateTime
+          .now()
+          .millisecondsSinceEpoch;
       GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PreviewPage(
-            picture: picture,
-          ),
+          builder: (context) =>
+              PreviewPage(
+                picture: picture,
+              ),
         ),
       );
     } on CameraException catch (e) {
@@ -867,8 +894,29 @@ class _CameraViewState extends State<CameraView> {
     }
   }
 
-}
+  Future<void> speakFeedback() async {
+    bool isPoseCorrect = false;
+    late bool isVoiceEnabledOrNor;
+    isVoiceEnabledOrNor = _voiceEnable;
+    bool isContiuing = true;
+    while (_voiceEnable) {
+      if (speechBubbleTextAdd == "Correct pose") {
+        isPoseCorrect = true;
+      }
+      setState(() {
+        speechBubbleText = speechBubbleTextAdd;
+        actions = [];
+        actions.add(Text('test'));
+      });
+      await flutterTts.speak(speechBubbleText);
 
+      // If the pose is correct or voice is disabled, exit the loop
+      if (isPoseCorrect || !_voiceEnable) {
+        break;
+      }
+    }
+  }
+}
 class PreviewPage extends StatelessWidget {
   const PreviewPage({Key? key, required this.picture}) : super(key: key);
 
