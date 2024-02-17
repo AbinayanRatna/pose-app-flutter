@@ -39,10 +39,20 @@ dependencies:
   carousel_slider: ^4.2.1
 
 
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: "AppIcon"
+  image_path: "assets/icons/new_1.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
 
 # The following section is specific to Flutter packages.
 flutter:

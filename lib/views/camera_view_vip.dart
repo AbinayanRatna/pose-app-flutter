@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +50,7 @@ class _CameraViewState extends State<CameraViewVip> {
   double _currentExposureOffset = 0.0;
   bool _changingCameraLens = false;
   bool _voiceEnable = false;
+  bool _autoCapture = false;
   double _angleLeftShoulder = 0.0;
   double _angleLeftElbow = 0.0;
   double _angleLeftHip = 0.0;
@@ -413,23 +413,7 @@ class _CameraViewState extends State<CameraViewVip> {
             );
             //poseText2 = "is hands on hip";
           }
-/*
-          final poseState = utils.isHandsOnHipPose(
-            angleRightShoulder,
-            angleLeftShoulder,
-            angleRightElbow,
-            angleLeftElbow,
-            poseDetector.state,
-          );
 
-          final poseState = utils.isOpenArmPose(
-            angleRightShoulder,
-            angleLeftShoulder,
-            angleRightElbow,
-            angleLeftElbow,
-            poseDetector.state,
-          );
-*/
           if (poseState != null && poseState == model.PoseState.correct) {
             // Pose is nearly 90 degrees on both sides, handle the state change or any actions here
             poseDetector.setPoseState(poseState);
@@ -480,7 +464,7 @@ class _CameraViewState extends State<CameraViewVip> {
             _switchLiveCameraToggle(),
             _zoomControl(),
             _exposureControl(),
-            _muteVoiceFeedback()
+            _muteVoiceFeedback(),
           ],
         ),
       ),
@@ -783,6 +767,16 @@ class _CameraViewState extends State<CameraViewVip> {
     setState(() => _changingCameraLens = false);
   }
 
+  void _autoCaptureEnableFunction() {
+    setState(() {
+      print("test 1:" + _voiceEnable.toString());
+      _autoCapture = !_autoCapture;
+    });
+    if (_autoCapture) {
+      takePictureAuto(); // Restart speaking if voice is re-enabled
+    }
+  }
+
   void _voiceEnableFunction() {
     setState(() {
       print("test 1:" + _voiceEnable.toString());
@@ -865,6 +859,35 @@ class _CameraViewState extends State<CameraViewVip> {
   }
 
   Future takePicture() async {
+    if (!(_controller!).value.isInitialized) {
+      return null;
+    }
+    if ((_controller!).value.isTakingPicture) {
+      return null;
+    }
+    try {
+      await (_controller!).setFlashMode(FlashMode.off);
+      XFile picture = await (_controller!).takePicture();
+      File imageFile = File(picture!.path);
+      int currentUnix = DateTime
+          .now()
+          .millisecondsSinceEpoch;
+      GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              PreviewPage(
+                picture: picture,
+              ),
+        ),
+      );
+    } on CameraException catch (e) {
+      debugPrint('Error occured while taking picture: $e');
+      return null;
+    }
+  }
+  Future takePictureAuto() async {
     if (!(_controller!).value.isInitialized) {
       return null;
     }
