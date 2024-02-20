@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:animated_notch_bottom_bar_no_border_radius/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
-import 'package:bouncing_button/bouncing_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,9 +15,11 @@ import 'package:pose_detection_app/poseType.dart';
 import 'package:pose_detection_app/views/pose_detection_view.dart';
 import 'package:pose_detection_app/views/pose_detection_view_vip.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().init(); //
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
@@ -31,90 +31,6 @@ void main() async {
         )
       : await Firebase.initializeApp();
   runApp(MyApp());
-}
-
-class AdminFragment extends StatelessWidget {
-  const AdminFragment({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 10.w, top: 20.w, left: 30.w),
-                child: Text(
-                  "Username",
-                  style: TextStyle(
-                    color: const Color.fromRGBO(85, 38, 25, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.w,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 10.w, top: 10.w, left: 30.w, right: 30.w),
-                child: const TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Enter the username"),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 10.w, top: 10.w, left: 30.w),
-                child: Text(
-                  "Password",
-                  style: TextStyle(
-                    color: const Color.fromRGBO(85, 38, 25, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.w,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 10.w, top: 10.w, left: 30.w, right: 30.w),
-                child: const TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Enter the password"),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.w),
-                child: Center(
-                  child: BouncingButton(
-                    onPressed: () {},
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        primary: const Color.fromRGBO(85, 38, 25, 1),
-                        onPrimary: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.w,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ]),
-      ),
-    );
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -144,7 +60,6 @@ class _MyAppState extends State<MyApp2> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        //designSize: const Size(411, 899),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
@@ -230,7 +145,6 @@ class _MyAppState extends State<MyApp2> {
                               padding: EdgeInsets.fromLTRB(0, 10.w, 0, 20.w),
                               child: ElevatedButton(
                                 onPressed: () {
-                                  //   print("Padding value 1: ${EdgeInsets.only(top: 10.w)}");
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -451,7 +365,12 @@ class LoginPageVIP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
+    return WillPopScope(
+        onWillPop: () async {
+      // Return false to disable back button
+      return false;
+    },
+    child:ScreenUtilInit(
       //designSize: const Size(411, 899),
       minTextAdapt: true,
       child: Scaffold(
@@ -586,10 +505,10 @@ class LoginPageVIP extends StatelessWidget {
                               onPressed: () {
                                 print(
                                     "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyApp2()),
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>  MyApp2(),),(route) => false
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -654,7 +573,7 @@ class LoginPageVIP extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),);
   }
 }
 
@@ -667,7 +586,12 @@ class SignupPageVIP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
+    return WillPopScope(
+        onWillPop: () async {
+      // Return false to disable back button
+      return false;
+    },
+    child: ScreenUtilInit(
       //designSize: const Size(411, 899),
       minTextAdapt: true,
       child: Scaffold(
@@ -765,10 +689,10 @@ class SignupPageVIP extends StatelessWidget {
                               onPressed: () {
                                 print(
                                     "Padding value 2: ${EdgeInsets.only(top: 10.w)}");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyApp2()),
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>  MyApp2(),),(route) => false
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -897,7 +821,7 @@ class SignupPageVIP extends StatelessWidget {
           ]),
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -1560,10 +1484,10 @@ class ProfilePage extends StatelessWidget {
                               padding: EdgeInsets.only(top: 10.w),
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => const MyApp()),
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const MyApp(),),(route) => false
                                     );
                                   },
                                   child: Text("Create VIP account",
@@ -1876,8 +1800,6 @@ class _PoseListPageList extends State<PoseListPageList> {
   }
 }
 
-
-//vip
 class GuestPageHomeVip extends StatefulWidget {
   GuestPageHomeVip({Key? key,}) : super(key: key);
 
@@ -2403,8 +2325,6 @@ class PoseListPageVip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Double size=(MediaQuery.of(context).size.height/2) as Double;
-    // TODO: implement build
     return Scaffold(
         backgroundColor: Color.fromRGBO(19, 154, 157, 0.2),
         appBar: AppBar(

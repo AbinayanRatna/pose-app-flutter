@@ -37,10 +37,7 @@ dependencies:
   scroll_snap_list: ^0.9.1
   flutter_tts: ^3.8.5
   carousel_slider: ^4.2.1
-
-
-
-
+  flutter_local_notifications: ^9.1.15
 
 dev_dependencies:
   flutter_test:

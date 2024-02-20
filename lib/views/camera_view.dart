@@ -7,11 +7,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart' as model;
 import 'package:pose_detection_app/painters/pose_painter.dart';
 import 'package:pose_detection_app/utils.dart' as utils;
+
+import '../main.dart';
+import '../notification_service.dart';
 
 class CameraView extends StatefulWidget {
   CameraView(
@@ -81,7 +85,6 @@ class _CameraViewState extends State<CameraView> {
 
     _initialize();
   }
-
 
   void _initialize() async {
     if (_cameras.isEmpty) {
@@ -227,8 +230,7 @@ class _CameraViewState extends State<CameraView> {
             } else if (bloc.state == model.PoseState.correct) {
               poseText3 = "Correct pose";
             }
-          }
-          else if (widget.index == 1) {
+          } else if (widget.index == 1) {
             if (_angleRightShoulder <= 120 || _angleRightShoulder >= 150) {
               if (_angleRightShoulder <= 120) {
                 poseText3 = "Increase the interior angle at right shoulder";
@@ -253,11 +255,10 @@ class _CameraViewState extends State<CameraView> {
               } else if (_angleLeftKnee >= 195) {
                 poseText3 = "Increase the interior angle at left knee";
               }
-            }else if(bloc.state==model.PoseState.correct){
-              poseText3="Correct pose";
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
             }
-          }
-          else if (widget.index == 2) {
+          } else if (widget.index == 2) {
             if (_angleRightShoulder <= 70 || _angleRightShoulder >= 110) {
               if (_angleRightShoulder <= 70) {
                 poseText3 = "Increase the interior angle at right shoulder";
@@ -306,11 +307,10 @@ class _CameraViewState extends State<CameraView> {
               } else if (_angleLeftElbow >= 195) {
                 poseText3 = "Decrease the interior angle at left elbow";
               }
-            }else if(bloc.state==model.PoseState.correct){
-              poseText3="Correct pose";
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
             }
-          }
-          else if (widget.index == 3) {
+          } else if (widget.index == 3) {
             if (_angleRightShoulder <= 45 || _angleRightShoulder >= 65) {
               if (_angleRightShoulder <= 45) {
                 poseText3 = "Increase the interior angle at right shoulder";
@@ -335,8 +335,8 @@ class _CameraViewState extends State<CameraView> {
               } else if (_angleRightElbow >= 110) {
                 poseText3 = "Decrease the interior angle at right elbow";
               }
-            }else if(bloc.state==model.PoseState.correct){
-              poseText3="Correct pose";
+            } else if (bloc.state == model.PoseState.correct) {
+              poseText3 = "Correct pose";
             }
           }
 
@@ -403,25 +403,8 @@ class _CameraViewState extends State<CameraView> {
               angleLeftElbow,
               poseDetector.state,
             );
-            //poseText2 = "is hands on hip";
           }
-/*
-          final poseState = utils.isHandsOnHipPose(
-            angleRightShoulder,
-            angleLeftShoulder,
-            angleRightElbow,
-            angleLeftElbow,
-            poseDetector.state,
-          );
 
-          final poseState = utils.isOpenArmPose(
-            angleRightShoulder,
-            angleLeftShoulder,
-            angleRightElbow,
-            angleLeftElbow,
-            poseDetector.state,
-          );
-*/
           if (poseState != null && poseState == model.PoseState.correct) {
             // Pose is nearly 90 degrees on both sides, handle the state change or any actions here
             poseDetector.setPoseState(poseState);
@@ -554,29 +537,6 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  /*
-  Widget _backButton() => Positioned(
-        top: 40,
-        left: 8,
-        child: SizedBox(
-          height: 50.0,
-          width: 50.0,
-          child: FloatingActionButton(
-            heroTag: Object(),
-            onPressed: () {
-              BlocProvider.of<model.PoseDetector>(context).reset();
-              Navigator.of(context).pop();
-            },
-            backgroundColor: Colors.black54,
-            child: Icon(
-              Icons.arrow_back_ios_outlined,
-              size: 20,
-            ),
-          ),
-        ),
-      );
-
-   */
   Widget _takePicture() => Positioned(
         bottom: 10.w,
         left: MediaQuery.of(context).size.width / 2.w,
@@ -850,9 +810,6 @@ class _CameraViewState extends State<CameraView> {
     try {
       await (_controller!).setFlashMode(FlashMode.off);
       XFile picture = await (_controller!).takePicture();
-      File imageFile = File(picture!.path);
-      int currentUnix = DateTime.now().millisecondsSinceEpoch;
-      GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -866,30 +823,102 @@ class _CameraViewState extends State<CameraView> {
       return null;
     }
   }
-
 }
 
 class PreviewPage extends StatelessWidget {
-  const PreviewPage({Key? key, required this.picture}) : super(key: key);
-
+  PreviewPage({Key? key, required this.picture}) : super(key: key);
+  NotificationService _notificationService = NotificationService();
   final XFile picture;
+  bool isImageSaved = true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(top: 50.w),
-            child: Image.file(File(picture.path),
-                fit: BoxFit.cover, width: MediaQuery.of(context).size.width),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.w, right: 20.w, left: 20.w),
-            child: const Text("Image successfully saved to gallery"),
-          )
-        ]),
+    return WillPopScope(
+        onWillPop: () async {
+      // Return false to disable back button
+      return false;
+    },
+    child: Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("Picture Preview"),
+        backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
       ),
-    );
+      backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 10,
+            child: Center(
+              child: Column(children: [
+                Image.file(File(picture.path),
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width),
+              ]),
+            ),
+          ),
+          Expanded(
+              flex: 1,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left:90.w),
+                    child: SizedBox(
+                      height: 50.0.w,
+                      width: 50.0.w,
+                      child: FloatingActionButton(
+                        heroTag: Object(),
+                        onPressed: () async {
+                          File imageFile = File(picture!.path);
+
+                          GallerySaver.saveImage(imageFile.path,
+                              albumName: "Pose app")
+                              .onError((error, stackTrace) {
+                            isImageSaved = false;
+                            Fluttertoast.showToast(
+                                msg: "Error in saving",
+                                toastLength: Toast.LENGTH_SHORT);
+                          });
+                          if (isImageSaved) {
+                            await _notificationService.showNotifications("Craftie","Image saved to gallery");
+                          }
+                        },
+                        backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+                        elevation: 0,
+                        child: Icon(
+                          Icons.save_alt,
+                          size: 35.w,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left:70.w),
+                    child: SizedBox(
+                      height: 50.0.w,
+                      width: 50.0.w,
+                      child: FloatingActionButton(
+                        heroTag: Object(),
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavBarPage(currentTab: 0),),(route) => false
+                          );
+                        },
+                        backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+                        elevation: 0,
+                        child: Icon(
+                          Icons.delete,
+                          size: 35.w,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ))
+        ],
+      ),
+    ));
   }
 }

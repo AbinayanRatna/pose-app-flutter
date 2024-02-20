@@ -11,6 +11,9 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:pose_detection_app/models/pose_one_model.dart' as model;
 import 'package:pose_detection_app/painters/pose_painter.dart';
 import 'package:pose_detection_app/utils.dart' as utils;
+import 'package:fluttertoast/fluttertoast.dart';
+import '../main.dart';
+import '../notification_service.dart';
 
 class CameraViewVip extends StatefulWidget {
   CameraViewVip(
@@ -941,26 +944,99 @@ class _CameraViewState extends State<CameraViewVip> {
   }
 }
 class PreviewPage extends StatelessWidget {
-  const PreviewPage({Key? key, required this.picture}) : super(key: key);
-
+  PreviewPage({Key? key, required this.picture}) : super(key: key);
+  NotificationService _notificationService = NotificationService();
   final XFile picture;
+  bool isImageSaved = true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(top: 50.w),
-            child: Image.file(File(picture.path),
-                fit: BoxFit.cover, width: MediaQuery.of(context).size.width),
+    return WillPopScope(
+        onWillPop: () async {
+          // Return false to disable back button
+          return false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text("Picture Preview"),
+            backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.w, right: 20.w, left: 20.w),
-            child: const Text("Image successfully saved to gallery"),
-          )
-        ]),
-      ),
-    );
+          backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+          body: Column(
+            children: [
+              Expanded(
+                flex: 10,
+                child: Center(
+                  child: Column(children: [
+                    Image.file(File(picture.path),
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width),
+                  ]),
+                ),
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left:90.w),
+                        child: SizedBox(
+                          height: 50.0.w,
+                          width: 50.0.w,
+                          child: FloatingActionButton(
+                            heroTag: Object(),
+                            onPressed: () async {
+                              File imageFile = File(picture!.path);
+
+                              GallerySaver.saveImage(imageFile.path,
+                                  albumName: "Pose app")
+                                  .onError((error, stackTrace) {
+                                isImageSaved = false;
+                                Fluttertoast.showToast(
+                                    msg: "Error in saving",
+                                    toastLength: Toast.LENGTH_SHORT);
+                              });
+                              if (isImageSaved) {
+                                await _notificationService.showNotifications("Craftie","Image saved to gallery");
+                              }
+                            },
+                            backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+                            elevation: 0,
+                            child: Icon(
+                              Icons.save_alt,
+                              size: 35.w,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left:70.w),
+                        child: SizedBox(
+                          height: 50.0.w,
+                          width: 50.0.w,
+                          child: FloatingActionButton(
+                            heroTag: Object(),
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NavBarPage(currentTab: 0),),(route) => false
+                              );
+                            },
+                            backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
+                            elevation: 0,
+                            child: Icon(
+                              Icons.delete,
+                              size: 35.w,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+            ],
+          ),
+        ));
   }
 }
