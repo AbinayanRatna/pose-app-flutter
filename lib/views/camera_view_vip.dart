@@ -605,9 +605,7 @@ class _CameraViewState extends State<CameraViewVip> {
             onPressed: _voiceEnableFunction,
             backgroundColor: (_voiceEnable)?Colors.white:Colors.black54,
             child: Icon(
-              Platform.isIOS
-                  ? Icons.keyboard_voice
-                  : Icons.keyboard_voice,
+              (_voiceEnable)?Icons.volume_up_rounded:Icons.volume_off_rounded,
               size: 35.w,color:(_voiceEnable)?Colors.black:Colors.white ,
             ),
           ),
