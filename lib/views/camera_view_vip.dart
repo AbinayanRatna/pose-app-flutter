@@ -63,6 +63,7 @@ class _CameraViewState extends State<CameraViewVip> {
   double _angleRightHip = 0.0;
   double _angleRightKnee = 0.0;
   String poseTextFinal = "";
+  int numCorrectPoses=0;
 
   PoseLandmark? p1;
   PoseLandmark? p2;
@@ -234,9 +235,11 @@ class _CameraViewState extends State<CameraViewVip> {
                 poseText3 = "Decrease the interior angle at left elbow";
               } else if (_angleLeftElbow >= 270) {
                 poseText3 = "Increase the interior angle at left elbow";
+
               }
             } else if (bloc.state == model.PoseState.correct) {
               poseText3 = "Correct pose";
+              numCorrectPoses++;
             }
           }
           else if (widget.index == 1) {
@@ -266,6 +269,7 @@ class _CameraViewState extends State<CameraViewVip> {
               }
             } else if (bloc.state == model.PoseState.correct) {
               poseText3 = "Correct pose";
+              numCorrectPoses++;
             }
           }
           else if (widget.index == 2) {
@@ -319,6 +323,7 @@ class _CameraViewState extends State<CameraViewVip> {
               }
             } else if (bloc.state == model.PoseState.correct) {
               poseText3 = "Correct pose";
+              numCorrectPoses++;
             }
           }
           else if (widget.index == 3) {
@@ -348,6 +353,7 @@ class _CameraViewState extends State<CameraViewVip> {
               }
             } else if (bloc.state == model.PoseState.correct) {
               poseText3 = "Correct pose";
+              numCorrectPoses++;
             }
           }
 
@@ -363,7 +369,11 @@ class _CameraViewState extends State<CameraViewVip> {
             _angleRightHip = angleRightHip;
             _angleRightKnee = angleRightKnee;
             poseTextFinal = poseText3;
-            //speakText(poseTextFinal);
+            if (_autoCapture && numCorrectPoses>=5) {
+              _autoCapture=!_autoCapture;
+              numCorrectPoses=0;
+              takePictureAuto(); // Restart speaking if voice is re-enabled
+            }
           });
 
           var poseState = utils.isOpenArmPose(
@@ -468,6 +478,7 @@ class _CameraViewState extends State<CameraViewVip> {
             _zoomControl(),
             _exposureControl(),
             _muteVoiceFeedback(),
+            _autoTakePicture()
           ],
         ),
       ),
@@ -662,6 +673,28 @@ class _CameraViewState extends State<CameraViewVip> {
         ),
       );
 
+  Widget _autoTakePicture() => Positioned(
+    top: 250.w,
+    right: 10.w,
+    child: SizedBox(
+      height: 50.0.w,
+      width: 50.0.w,
+      child: FloatingActionButton(
+        heroTag: Object(),
+        onPressed:(){
+          _autoCapture = !_autoCapture;
+        },
+        backgroundColor: (_autoCapture)?Colors.white:Colors.black54,
+        child: Icon(
+          (_autoCapture)?Icons.slow_motion_video_outlined:Icons.motion_photos_paused_sharp,
+          color:(_autoCapture)?Colors.black:Colors.white,
+          size: 35.w,
+        ),
+      ),
+    ),
+  );
+
+
   Widget _exposureControl() =>
       Positioned(
         top: 40,
@@ -766,16 +799,6 @@ class _CameraViewState extends State<CameraViewVip> {
     await _stopLiveFeed();
     await _startLiveFeed();
     setState(() => _changingCameraLens = false);
-  }
-
-  void _autoCaptureEnableFunction() {
-    setState(() {
-      print("test 1:" + _voiceEnable.toString());
-      _autoCapture = !_autoCapture;
-    });
-    if (_autoCapture) {
-      takePictureAuto(); // Restart speaking if voice is re-enabled
-    }
   }
 
   void _voiceEnableFunction() {
@@ -1019,7 +1042,7 @@ class PreviewPage extends StatelessWidget {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NavBarPage(currentTab: 0),),(route) => false
+                                    builder: (context) => GuestPageHomeVip(),),(route) => false
                               );
                             },
                             backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),
