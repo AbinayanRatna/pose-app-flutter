@@ -903,7 +903,7 @@ class PreviewPage extends StatelessWidget {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NavBarPage(currentTab: 0),),(route) => false
+                                builder: (context) => GuestPageHome(),),(route) => false
                           );
                         },
                         backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),

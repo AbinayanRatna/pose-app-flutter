@@ -898,6 +898,13 @@ class _GuestPageHomeState extends State<GuestPageHome> {
         fit: BoxFit.cover,
       ),
     ),
+    Container(
+      margin: EdgeInsets.only(left: 10.w),
+      child: Image.asset(
+        "assets/ad_3.png",
+        fit: BoxFit.cover,
+      ),
+    ),
   ];
 
   @override
@@ -1101,7 +1108,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPage(currentTab: 0)),
+                              builder: (context) => NavBarPageVip(currentTab: 0)),
                         );
                       },
                       child: Container(
@@ -1140,7 +1147,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPage(currentTab: 2)),
+                              builder: (context) => NavBarPageVip(currentTab: 2)),
                         );
                       },
                       child: Container(
@@ -1179,7 +1186,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPage(currentTab: 1)),
+                              builder: (context) => NavBarPageVip(currentTab: 1)),
                         );
                       },
                       child: Container(
@@ -1219,7 +1226,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPage(currentTab: 3)),
+                              builder: (context) => NavBarPageVip(currentTab: 3)),
                         );
                       },
                       child: Container(

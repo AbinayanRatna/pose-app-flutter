@@ -35,7 +35,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _showWidget = true;
       });
@@ -105,7 +105,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
            Padding(
             padding:  EdgeInsets.fromLTRB(20.w,0,20.w,0),
-            child:  const LinearTimer(duration: Duration(seconds: 4),color: Colors.blue,),
+            child:  const LinearTimer(duration: Duration(seconds: 2),color: Colors.blue,),
           )
         ],
       ),

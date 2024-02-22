@@ -74,7 +74,7 @@ class _CameraViewState extends State<CameraViewVip> {
 
   late FlutterTts flutterTts;
   String speechBubbleText = '';
-  String speechBubbleTextAdd = 'Hello !';
+  String speechBubbleTextAdd = '';
   List<Widget> actions = [];
   bool alreadyDelayed = false;
 
@@ -279,19 +279,7 @@ class _CameraViewState extends State<CameraViewVip> {
               } else if (_angleRightShoulder >= 110) {
                 poseText3 = "Decrease the interior angle at right shoulder";
               }
-            } else if (_angleRightHip <= 175 || _angleRightHip >= 215) {
-              if (_angleRightHip <= 175) {
-                poseText3 = "Increase the interior angle at right hip";
-              } else if (_angleRightHip >= 215) {
-                poseText3 = "Decrease the interior angle at right hip";
-              }
-            } else if (_angleRightKnee <= 130 || _angleRightKnee >= 170) {
-              if (_angleRightKnee <= 130) {
-                poseText3 = "Increase the interior angle at right knee";
-              } else if (_angleRightKnee >= 170) {
-                poseText3 = "Decrease the interior angle at right knee";
-              }
-            } else if (_angleRightElbow <= 160 || _angleRightElbow >= 200) {
+            }   else if (_angleRightElbow <= 160 || _angleRightElbow >= 200) {
               if (_angleRightElbow <= 160) {
                 poseText3 = "Increase the interior angle at right elbow";
               } else if (_angleRightElbow >= 200) {
@@ -303,19 +291,7 @@ class _CameraViewState extends State<CameraViewVip> {
               } else if (_angleLeftShoulder >= 150) {
                 poseText3 = "Decrease the interior angle at left shoulder";
               }
-            } else if (_angleLeftHip <= 85 || _angleLeftHip >= 125) {
-              if (_angleLeftHip <= 85) {
-                poseText3 = "Increase the interior angle at left hip";
-              } else if (_angleLeftHip >= 125) {
-                poseText3 = "Decrease the interior angle at left hip";
-              }
-            } else if (_angleLeftKnee <= 190 || _angleLeftKnee >= 230) {
-              if (_angleLeftKnee <= 190) {
-                poseText3 = "Increase the interior angle at left knee";
-              } else if (_angleLeftKnee >= 230) {
-                poseText3 = "Decrease the interior angle at left knee";
-              }
-            } else if (_angleLeftElbow <= 310 || _angleLeftElbow >= 350) {
+            }  else if (_angleLeftElbow <= 310 || _angleLeftElbow >= 350) {
               if (_angleLeftElbow <= 165) {
                 poseText3 = "Increase the interior angle at left elbow";
               } else if (_angleLeftElbow >= 195) {
@@ -896,7 +872,7 @@ class _CameraViewState extends State<CameraViewVip> {
       int currentUnix = DateTime
           .now()
           .millisecondsSinceEpoch;
-      GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
+    //  GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -925,7 +901,7 @@ class _CameraViewState extends State<CameraViewVip> {
       int currentUnix = DateTime
           .now()
           .millisecondsSinceEpoch;
-      GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
+    //  GallerySaver.saveImage(imageFile.path, albumName: "Pose app");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -964,6 +940,7 @@ class _CameraViewState extends State<CameraViewVip> {
     }
   }
 }
+
 class PreviewPage extends StatelessWidget {
   PreviewPage({Key? key, required this.picture}) : super(key: key);
   NotificationService _notificationService = NotificationService();

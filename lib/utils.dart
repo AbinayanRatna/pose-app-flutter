@@ -322,23 +322,23 @@ PoseState isDapPose(
   if (current==PoseState.neutral &&
       (rightElbowRightShoulderRightHipAngle >(90 - threshold) && rightElbowRightShoulderRightHipAngle <(90 + threshold)) &&
       (rightWristRightElbowRightShoulderAngle >(180 - threshold) && rightWristRightElbowRightShoulderAngle <(180 + threshold)) &&
-      (rightShoulderRightHipRightKneeAngle >(195 - threshold) && rightShoulderRightHipRightKneeAngle <(195 + threshold)) &&
-      (rightHipRightKneeRightAnkleAngle >(150 - threshold) && rightHipRightKneeRightAnkleAngle <(150 + threshold)) &&
+     // (rightShoulderRightHipRightKneeAngle >(195 - threshold) && rightShoulderRightHipRightKneeAngle <(195 + threshold)) &&
+     // (rightHipRightKneeRightAnkleAngle >(150 - threshold) && rightHipRightKneeRightAnkleAngle <(150 + threshold)) &&
       (leftElbowLeftShoulderLeftHipAngle >(130 - threshold) && leftElbowLeftShoulderLeftHipAngle <(130 + threshold)) &&
-     (leftWristLeftElbowLeftShoulderAngle >(330 - threshold) && leftWristLeftElbowLeftShoulderAngle <(330 + threshold)) &&
-      (leftShoulderLeftHipLeftKneeAngle >(105 - threshold) && leftShoulderLeftHipLeftKneeAngle <(105 + threshold)) &&
-      (leftHipLeftKneeLeftAnkleAngle >(210 - threshold) && rightElbowRightShoulderRightHipAngle <(210 + threshold))
+     (leftWristLeftElbowLeftShoulderAngle >(330 - threshold) && leftWristLeftElbowLeftShoulderAngle <(330 + threshold)) // &&
+    //  (leftShoulderLeftHipLeftKneeAngle >(105 - threshold) && leftShoulderLeftHipLeftKneeAngle <(105 + threshold)) &&
+     // (leftHipLeftKneeLeftAnkleAngle >(210 - threshold) && rightElbowRightShoulderRightHipAngle <(210 + threshold))
   ) {
     return PoseState.correct; // Transition to 'correct' state for the desired pose
   } else if (current==PoseState.correct &&
       (rightElbowRightShoulderRightHipAngle <=(90 - threshold) || rightElbowRightShoulderRightHipAngle >=(90 + threshold)) ||
       (rightWristRightElbowRightShoulderAngle <=(180 - threshold) || rightWristRightElbowRightShoulderAngle >=(180 + threshold)) ||
-      (rightShoulderRightHipRightKneeAngle <=(195 - threshold) || rightShoulderRightHipRightKneeAngle >=(195 + threshold)) ||
-      (rightHipRightKneeRightAnkleAngle <=(150 - threshold) || rightHipRightKneeRightAnkleAngle >=(150 + threshold)) ||
+     // (rightShoulderRightHipRightKneeAngle <=(195 - threshold) || rightShoulderRightHipRightKneeAngle >=(195 + threshold)) ||
+     // (rightHipRightKneeRightAnkleAngle <=(150 - threshold) || rightHipRightKneeRightAnkleAngle >=(150 + threshold)) ||
       (leftElbowLeftShoulderLeftHipAngle <=(130 - threshold) || leftElbowLeftShoulderLeftHipAngle >=(130 + threshold)) ||
-      (leftWristLeftElbowLeftShoulderAngle <=(330 - threshold) || leftWristLeftElbowLeftShoulderAngle >=(330 + threshold)) ||
-      (leftShoulderLeftHipLeftKneeAngle <=(105 - threshold) || leftShoulderLeftHipLeftKneeAngle >=(105 + threshold)) ||
-      (leftHipLeftKneeLeftAnkleAngle <=(210 - threshold) || rightElbowRightShoulderRightHipAngle >=(210 + threshold))
+      (leftWristLeftElbowLeftShoulderAngle <=(330 - threshold) || leftWristLeftElbowLeftShoulderAngle >=(330 + threshold)) // ||
+     // (leftShoulderLeftHipLeftKneeAngle <=(105 - threshold) || leftShoulderLeftHipLeftKneeAngle >=(105 + threshold)) ||
+     // (leftHipLeftKneeLeftAnkleAngle <=(210 - threshold) || rightElbowRightShoulderRightHipAngle >=(210 + threshold))
   ) {
     return PoseState.neutral; // Return to 'neutral' if the pose alignment is lost
   }
