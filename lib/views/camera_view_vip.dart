@@ -997,6 +997,11 @@ class PreviewPage extends StatelessWidget {
                               });
                               if (isImageSaved) {
                                 await _notificationService.showNotifications("Craftie","Image saved to gallery");
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GuestPageHomeVip(),),(route) => false
+                                );
                               }
                             },
                             backgroundColor: const Color.fromRGBO(19, 154, 157, 1.0),

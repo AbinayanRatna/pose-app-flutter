@@ -1108,7 +1108,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPageVip(currentTab: 0)),
+                              builder: (context) => NavBarPage(currentTab: 0)),
                         );
                       },
                       child: Container(
@@ -1147,7 +1147,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPageVip(currentTab: 2)),
+                              builder: (context) => NavBarPage(currentTab: 2)),
                         );
                       },
                       child: Container(
@@ -1186,7 +1186,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPageVip(currentTab: 1)),
+                              builder: (context) => NavBarPage(currentTab: 1)),
                         );
                       },
                       child: Container(
@@ -1226,7 +1226,7 @@ class _GuestPageHomeState extends State<GuestPageHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NavBarPageVip(currentTab: 3)),
+                              builder: (context) => NavBarPage(currentTab: 3)),
                         );
                       },
                       child: Container(
@@ -1693,115 +1693,6 @@ class AboutUs extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class PoseListPageList extends StatefulWidget {
-  @override
-  State<PoseListPageList> createState() => _PoseListPageList();
-}
-
-class _PoseListPageList extends State<PoseListPageList> {
-  List<PoseType> poseList = [
-    PoseType("assets/pose_1.png", "Pose 1", "Try this pose.It is a good pose."),
-    PoseType("assets/pose_2.png", "Pose 2", "Try this pose.It is a good pose."),
-    PoseType("assets/pose_3.png", "Pose 3", "Try this pose.It is a good pose."),
-    PoseType("assets/pose_4.png", "Pose 4", "Try this pose.It is a good pose."),
-  ];
-  int currentpage = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(title: Text("Select a pose")),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          AnimatedSwitcher(
-            duration: Duration(milliseconds: 500),
-            child: Container(
-                key: ValueKey<String>(poseList[currentpage].imagePath),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(poseList[currentpage].imagePath),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 15,
-                    sigmaY: 15,
-                  ),
-                  child: Container(color: Colors.black.withOpacity(0.2)),
-                )),
-          ),
-          FractionallySizedBox(
-            heightFactor: 0.55,
-            child: PageView.builder(
-              itemCount: poseList.length,
-              onPageChanged: (int page) {
-                setState(() {
-                  currentpage = page;
-                });
-              },
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
-                  color: Colors.white, // White background color
-                  child: Center(
-                    child: FractionallySizedBox(
-                      widthFactor: 0.5, // Adjust the width factor as needed
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            margin: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(poseList[index].imagePath),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.circular(32),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 5),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            poseList[index].title,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            poseList[index].description,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
