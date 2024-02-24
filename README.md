@@ -4,10 +4,10 @@ Craftie is a multiplatform app which can be used to correct the poses when givin
 
 Screenshots :
 <p float="left">
-<img src="scrshots/login.jpg" alt="Login" style="width: 300px"/>
-<img src="scrshots/home.gif" alt="Home" style="width: 300px"/>
-<img src="scrshots/poses.gif" alt="Poses" style="width: 300px"/>
-<img src="scrshots/demo.gif" alt="Demo" style="width: 300px"/>
+<img src="scrshots/login.jpg" alt="Login" style="width: 200px"/>
+<img src="scrshots/home.gif" alt="Home" style="width: 200px"/>
+<img src="scrshots/poses.gif" alt="Poses" style="width: 200px"/>
+<img src="scrshots/demo.gif" alt="Demo" style="width: 200px"/>
 </p>
 Functions that can be done,
 
